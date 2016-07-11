@@ -1,0 +1,101 @@
+\section{Appendix}
+
+\label{sec:example}
+\begin{figure}[H]
+	\centering
+	\includegraphics[clip, trim=0.2cm 0.2cm 0.2cm 0.2cm, width=1.0\columnwidth]{figures/ATM.pdf}
+	\caption{ATM State machine example} 
+	\label{fig:example}
+\end{figure}
+
+\begin{lstlisting}[caption={IState interface and function pointers in C++, in which S0 is one of lstates and NUM\_STATES is the number of states}, label=lst:IStateCpp, language=C++]
+typedef struct IState {
+  int previousActives[2];   int actives[2];
+  EventId defEvents[2];
+  void (C::*entry)();  void (C::*exit)();  
+  void (C::*doActivity)();
+} IState;
+class C {
+private:
+  IState states[NUM_STATES];
+public:
+  C() {
+    states[S0_ID].entry = &C::S0_entry;
+    defEvents[0] = EVENT_MAX; 
+    defEvents[1] = EVENT_MAX;
+    ...
+  }
+  void S0_entry {...}
+}
+\end{lstlisting}
+
+\begin{lstlisting}[caption={Example code generated for doActivity, the method in takes as input a state id to use and call the appropriate mutex and \ti{doActivity}, respectively}, label=lst:doActivity, language=C++]
+void doActivity(int stateId) {
+  isStarts[stateId] = false;
+  while(true) {
+    mutex[stateId].lock();
+    while(!isStarts[stateId]) {
+      mutex[stateId].wait();
+    }
+    states[stateId].doActivity();
+    isStarts[stateId] = false;
+    mutex[stateId].unlock();
+    if (!isStops[stateId]) {
+      if (stateId == IDLE_ID || stateId == DISPENSEMONEY_ID ...) {
+        pushCompletionEvent(stateId);
+      }
+    }
+  }
+}
+\end{lstlisting}
+
+\begin{lstlisting}[caption=Example code generated for the region of S1, label=lst:region, frame=single]
+void S1Region1Enter(int enter_mode){
+  if (enter_mode == DEFAULT) {
+    states[S1_ID].actives[0] = S3_ID;
+    states[S3_ID].entry();  sendStartSignal(S3_ID);
+    S3Region1Enter(DEFAULT);
+  } else if (enter_mode == S2_MODE) { //entry
+    states[S1_ID].actives[0] = S2_ID;
+    states[S2_ID].entry();  sendStartSignal(S2_ID);
+  } if (enter_mode == SH_MODE) {
+    StateIDEnum his;
+    if (states[S1_ID].pres[0] != STATE_MAX){
+      his = states[S1_ID].pres[0];
+    } else {
+      his = S2_ID;
+    }
+    states[S1_ID].actives[0] = his;
+    states[his].entry();  sendStartSignal(his);
+    if (S3_ID == his) {
+      S3Region1Enter (S3_REGION1_DEFAULT);
+    } 
+  } else if (enter_mode == S4_MODE) {
+    states[S1_ID].actives[0] = S3_ID;
+    states[S3_ID].entry();  sendStartSignal(S3_ID);
+    S3Region1Enter(S4_MODE);
+  } else if (enter_mode == ENP_MODE) {...}
+\end{lstlisting}
+
+Listing \ref{lst:region} shows the C++-like example code generated for entering the state $S1$ in \ref{fig:entering}. In this case the entering model values are $\{DEFAULT = 0, SH\_MODE = 1, S2\_MODE = 2, S4\_MODE=3, ENP_MODE=4\}$. By default, the active sub-state of the region is set after the execution of any effect associated with the initial transition, $S3$ is set as active sub-state of $S1$. It is worth noting that after the execution of each entry, a start signal is sent to activate the waiting thread associated with \ti{doActivity} of the corresponding state.
+
+\begin{lstlisting}[caption=Example code generated for $Join1$ and $Junction1$, label=lst:event1, language=C++]
+if((states[VERIFYING_ID].actives[0]==CARDVALID_ID)
+  &&(states[VERIFYING_ID].actives[1]==PININCORRECT_ID)) {
+  Junction1 = 0; //else outgoing transition of Junction1
+  if (tries < maxTries) {Junction1 = 1;}
+    FORK(R1Exit); FORK(R2Exit);
+    //JOIN ...
+    sendStopSignal(VERIFYING_ID);	exit(VERIFYING_ID);
+    FORK(effect_t11); FORK(effect_t13);
+    //JOIN ...
+    if (Junction1=1) {
+      tries++;
+      activeStateID = IDLE_ID;		entry(IDLE_ID);
+      sendStartSignal(IDLE_ID);
+    } else {
+      cardValid = false;
+      activeStateID = IDLE_ID;		sendStartSignal(IDLE_ID);
+    }
+  }
+\end{lstlisting}

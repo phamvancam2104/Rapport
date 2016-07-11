@@ -1,0 +1,97 @@
+\subsection{Thread-based Concurrency for UML State Machine}
+\label{sec:thread}
+This Subsection describes our design for generated code. 
+The design is based on an example-based analysis, which is not presented here due to space limitation.
+
+%\input{sections/analysis}
+
+
+
+
+\subsubsection{Thread-based design of generated code}
+The concurrency of concurrent UML State Machines is based on multi-thread, in which there are permanent and spontaneous threads. 
+While permanent threads (PTs) are created once and live as long as the state machine is alive, spontaneous threads (STs) are spawned in active for a while. 
+%The method associated with a permanent thread is a non-deterministic action, which is run in parallel with the main thread. The latter reads and dispatch events from the event queue. 
+Each PT is initialized at the state machine initialization. 
+%The number of threads associated with NDAs is therefore equal to that of the NDAs.
+The design of threads is based on the thread pool pattern, which initializes all threads at once, and the paradigm "wait-execute-wait". 
+In the latter, a thread \tb{waits} for a signal to \tb{execute} its associated method and goes back to the \tb{wait} point if it receives a stop signal or its associated method completes. 
+Each PT is associated with one of the following actions:
+\begin{itemize}
+	\item \ti{doActivity} of each state if has. %The number of \ti{doActivity} $n_{do} = \#\{s \in V|\exists doActivity(s)\}$
+	
+	\item Sleep function associated with a \ti{TimeEvent} which counts ticks and emits a \ti{TimeEvent} once completes.%: $n_{te} = \#\{e \in E|\ti{e is a time event}\}$.
+	
+	\item Change detect function associated with a \ti{ChangeEvent} which observes a variable or a boolean expression and pushes an event to the queue if changes happen.%: $n_{che} = \#\{e \in E|\ti{e is a change event}\}$.
+	
+	\item State machine main thread,which reads events from the event queue, and sends start and stop signals to these initial threads.
+\end{itemize} 
+
+%Therefore, The number of initial threads is $n_{threads} = n_{do} + n_{te} + n_{che}$ plus a main thread, which reads events from the event queue, and sends start and stop signals to these initial threads. 
+
+Now we consider STs which are spawned by a parent thread, joined until and destroyed once the associated methods complete. 
+
+\begin{comment}
+The followings describe different types of DAs:
+
+\begin{itemize}
+	\item Actions executed when entering/exiting an orthogonal region, which can be: execute a chain of transition effects contained by the region before entering a stable sub-state or exiting the region completely.%: $n_{region threads} = \#\{r \in \mathcal{R}|ctner(r).kind=conc\}$
+	
+	\item Effects of transitions outgoing from a $fork$ and those incomings to a $join$.%: \\
+	%$\mathcal{J} = \{v \in V|v.kind=join\}$ \\
+	%$\mathcal{F} = \{v \in V|v.kind=fork\}$ \\
+	%$$n_{FJ\_threads} = \sum_{v \in \mathcal{F}} {\#T_{outs}(v)} + \sum_{v \in \mathcal{J}} {\#T_{ins}(v)}$$.
+\end{itemize}
+\end{comment}
+
+The STs follow a paradigm in which if a thread $parent$ spawns a set of threads $children$, $parent$ must wait until $children$ complete their associate methods. These threads are spawned in one of the following cases:
+
+\begin{itemize}
+	\item A thread is created for each effect of transitions' outgoing from a \ti{fork} or incoming to a \ti{join}.
+	
+	\item Entering a concurrent state $s$, after the execution of $entry(s)$, a thread is also created for each orthogonal region. 
+	
+	\item Exiting a concurrent state $s$, before the execution of $exit(s)$, a thread is also created for each region to exit the corresponding active sub-state.
+	
+	%\item An event is processed by active states, in which a thread per orthogonal region. 
+\end{itemize}
+
+\subsubsection{Deadlock avoidance}
+Each PT is associated with a mutex for synchronization communication in the multi-thread-based generated code. 
+The mutex must be locked before the method associated with the thread is executed. 
+The mutex associated with the main thread preserves the run-to-completion semantics since some event such as \ti{CallEvent} can be processed synchronously and some asynchronously. Each event processing must lock the main mutex before executing the actual processing. 
+%Deadlock is one of the main issues in designing multi-thread applications, in which two competing actions wait for the other to finish. In our case, 
+
+
+\begin{comment}
+\begin{tabular}{p{4.0cm}|p{4.0cm}}
+Example code generated for doActivity  &  Option  2\\
+\begin{lstlisting}[language=C++]
+void doActivity(int stateId) {
+  isStarts[stateId] = false;
+  while(true) {
+    mutex[stateId].lock();
+    while(!isStarts[stateId]) {
+      mutex[stateId].wait();
+    }
+    states[stateId].doActivity();
+    isStarts[stateId] = false;
+    mutex[stateId].unlock();
+    if (!isStops[stateId]) {
+      if (stateId == IDLE_ID || stateId == DISPENSEMONEY_ID ...) {
+	    pushCompletionEvent(stateId);
+	  }
+    }
+  }
+}
+	\end{lstlisting}&
+	\begin{lstlisting}
+	#include <stdio.h>
+	
+	int main()
+	{
+	printf("Hello world\n");
+	}
+	\end{lstlisting}
+\end{tabular} 
+\end{comment}

@@ -1,0 +1,394 @@
+\section{Round-trip engineering of UML State Machine and code}
+\label{sec:approach}
+This section presents our RTE approach. At first, it sketches USM concepts supported by this study. The outline and the detail of the approach are presented afterward.
+\subsection{Scope}
+A USM describes the behavior of an active UML class which is called context class. A USM has a number of possible states and well-defined conditional transitions. A state is either an atomic state, a composite state that is composed of sub-states and has at most one active sub-state at a certain time, or a concurrent state which has several active sub-states at the same time. Only one of the inner states of the USM can be active at a time. Transitions between states can be triggered by external or internal events. An action can also be activated by the trigger while transitioning from one state to another state. A state can have associated actions such as \ti{entry/exit/doActivity} executed when the state is entered/exited or while it is active, respectively. A transition can be external, local, or internal.
+
+A composite state can have one or several entry/exit points. An entry/exit point can have multiple incoming transitions and exactly one outgoing transition which has no triggering event and guard. The transition outgoing from an entry point of a composite state ends on either a sub-state or an entry point of one of the sub-states of the composite state. The transition outgoing from an exit point ends on either an exit point of the parent state or a state/an entry point in the same region. A concurrent state is entered by either an incoming transition ending on its border, or several incoming transitions outgoing from a \ti{fork} and ending on sub-states of the containing regions. 
+
+%UML SM is widely used as a means to modeling the behavior of a component in complex, reactive systems. A SM has a number of possible states and well-defined conditional transitions between states. A state is either an atomic state, a hierarchical state that is composed of sub-states and has at most one active sub-state at a certain time, or a concurrent state which could have several active sub-states at the same time. Only one of the inner states of the SM can be active at a time. A state can have associated actions such as entry/exit/doActivity executed in the running of the SM. The active state of the machine can be changed to another state triggered by external or internal events. An action can also be activated by the trigger in transitioning from one state to another one.  
+
+\subsection{Approach outline}
+Our RTE approach is based on the double-dispatch pattern presented in \cite{spinke_object-oriented_2013} for mapping from USM to a set of classes with embedded code fragments, and traceability-mapping management in RTE. Fig. \ref{fig:outline} shows the outline of our RTE approach consisting of a forward and a backward/reverse (engineering) process. In the forward process, a USM is transformed into UML classes in an intermediate model. The use of the intermediate model facilitates the transformation from the USM to code and vice versa. Each class of the intermediate model contains attributes, operations and method bodies (block of text) associated with each implemented operation. The transformation utilizes several patterns which will be presented later. A tracing information table is created in the transformation to be used in the backward direction of the RTE. The intermediate model is then used as the input of a code generator to create source code. This generation step also puts a mapping from UML classes to object-oriented source code in a second table.
+
+When the source code is modified, a syntactic analysis process belonging to the backward transformation checks whether the modified code conforms to the USM semantics (see Subsection \ref{subsec:verification} for the detail of the analysis). This transformation takes as input the tracing tables, the created intermediate model and the USM to update these models sequentially. While the forward process can generate code from hierarchical and concurrent USMs, the backward one only works for hierarchical machines excluding some pseudo-states which are \ti{history}, \ti{join}, \ti{fork}, \ti{choice} and \ti{junction}. These features are in future work.
+
+\begin{figure}
+\centering
+\includegraphics[clip, trim=3.5cm 3.5cm 5.9cm 3.5cm, width=1\columnwidth]{figures/flowchart.pdf}
+\caption{Outline of state machine and code RTE} 
+\label{fig:outline}
+\end{figure}
+
+\subsection{From UML state machine to UML classes}
+This section describes the forward process which transforms a USM into an intermediate UML model. %The latter consists of transforming USM elements (see \ref{subsec:states}, \ref{subsec:events}, \ref{subsec:transitions}) into the intermediate model, storing tracing information (see \ref{subsec:trace}) and code generation (see \ref{subsec:codegen}) from the intermediate model.
+
+\subsubsection{Transformation of states}
+\label{subsec:states}
+This sub-section describes the transformation of states to the intermediate model. 
+%This paper considers a component as a UML class called context class. 
+Each state of the USM is transformed into a UML class. Each UML class representing an atomic state inherits from a base state class. The latter defines a reference to the context class, a process event operation for each event in the USM and other operations as the double-dispatch (DD) approach in \cite{spinke_object-oriented_2013}. A state class \ti{s} also has an attribute referring to the state class associated with the composite state containing \ti{s}. A composite state class has an attribute pointing to a state instance indicating the active sub-state of the composite state and a \ti{dispatchEvent} operation (see \ref{subsec:codegen}) dispatching incoming events to the appropriate active state. A composite and a concurrent state class inherit from a base composite and base concurrent state class, respectively, which also inherit from the base state class. 
+ %An example of this transformation in shown in Fig. \ref{fig:hierarchical-class}. The \ti{ParentState} and \ti{SubState} are vertexes of the SM describing the \ti{Client} component, for instance. The \ti{State} and \ti{CompositeState} classes are library classes. The \ti{ParentState} inherits from the \ti{CompositeState} class since it is a hierarchical state.
+
+\begin{comment}
+\begin{figure}
+\centering
+\includegraphics[clip, trim=6.5cm 21.3cm 5.5cm 2.4cm, width=0.5\textwidth]{figures/compositepattern}
+\caption{Transformation from hierarchical state to class diagram} 
+\label{fig:hierarchical-class}
+\end{figure}
+\end{comment}
+
+
+\subsubsection{Transformation of events}
+\label{subsec:events}
+%DD has no means to convey data of events in the SM and considers every event as the same. In our approach, 
+Each event is transformed into a UML class. Three different event class types corresponding to the UML event types \ti{CallEvent}, \ti{SignalEvent} and \ti{TimeEvent} are differentiated. An event class associated with a \ti{CallEvent} inherits from a base event class and contains the parameters in form of attributes typed by the same types as those of the operation associated with the \ti{CallEvent}. The operation must be a member of the context class (a component as described above). For example, a call event \ti{CallEventSend} associated with an operation named \ti{Send}, which has two input parameters typed by \ti{Integer}, is transformed into a class \ti{CallEventSend} having two attributes typed by \ti{Integer}. When a component receives an event, the event object is stored in an event queue.
+
+A signal event enters the component through a port typed by the signal. The implementation view of this scenario depends on the mapping of component-based to object-oriented concepts. In the following, we choose the mapping done in Papyrus Designer \cite{_papyrus/designer/code-generation_????}. In this mapping, the signal is transferred to the context class by an operation provided by the class at the associated port. Therefore, the transfer of a signal event becomes similar to that of \ti{CallEvent}. For example, a signal event containing a data \ti{SignalData} arrives at a port \ti{p} of a component \ti{C}. The transformation derives an interface \ti{SignalDataInterface} existing as the provided interface of \ti{p}. \ti{SignalDataInterface} has only one operation \ti{pushSignalData} whose body will be generated to push the event to the event queue of the component. Therefore, the processing of a \ti{SignalEvent} is the same as that of a \ti{CallEvent}. In the following sections, the paper only considers \ti{CallEvent} and \ti{TimeEvent}.
+
+A \ti{TimeEvent} is considered as an internal event. The source state class of a transition triggered by a \ti{TimeEvent} executes a thread to check the expiration of the event duration as in \cite{Niaz2004} and puts the time event in the event queue of the context class. 
+
+\subsubsection{Transformation of transitions and actions}
+\label{subsec:transitions}
+%In this paper, actions, transition guards and effects in the SM are considered as an operation associated with a block of code describing the actions behavior. 
+Each action is transformed into an operation in the transformed context class. \ti{Entry/Exit/doActivity} actions have no parameters while transition actions and guards accept the triggering event object. % have access to the event data. 
+\ti{doActivity} is implicitly called in the \ti{State} class and executed in a thread which is interrupted when the state changes. A transition is transformed into an operation taking as input the source state object and the event object similarly to DD. Transitions transformed from triggerless transition which has no triggering events accept only the source state object as a parameter.
+
+Four ways of entering a composite state are differentiated. Three of these including a transition ending (1) on the border, (2) on a sub-state or (3) on a history state of a composite state are detailed in \cite{spinke_object-oriented_2013}. In the last one, a transition \ti{$t_{ex}$} ends (4) on an entry point of a composite state. Semantically, (4) is similar to (2) since both have the same sequential operations: executing the entry action of the composite state, execute the effect of the outgoing transition of the entry point \ti{$t_{in}$} in (4) or the transition \ti{$t_{default}$} from an initial pseudo state to the sub-state in (2). The transition \ti{$t_{in}$} is not allowed to have a guard or a trigger event similarly to the semantics of \ti{$t_{default}$}. 
+
+Exiting a composite state is executed through exit points inversely to entry points. %In our implementation presented in Section \ref{sec:implementation} entry points and exit points are supported in both directions of the RTTRIP. 
+
+\subsubsection{Storage of tracing information}
+\label{subsec:trace}
+The tracing information generated in the transformation is contained in a table. Mappings from USM concepts to UML classes are mainly one-to-one except for attributes referring composite state or sub-state. The table therefore only keeps identifiers as qualified names and types of elements in the USM model and the associated elements in the UML class model. A part of tracing table for the USM example in Fig. \ref{fig:statemachuine} is shown in Table \ref{table:trace} in which \ti{sPrefix} and \ti{tPrefix} are \ti{Root::Client::StateMachine::TopRegion} and \ti{Root::Client::PerClass\_Client}, respectively.
+
+In Fig. \ref{fig:statemachuine}, the USM is contained in, for instance, a \ti{Client} component, \ti{Root} is the name of the source model. States of the USM are contained in a region \ti{TopRegion}. In the intermediate model, a package named \ti{PerClass\_Client} is created to contain all of transformed classes including ones associated with events and states. This package eases the maintenance of source code as well as the backward transformation of the RTE. The transition \ti{fromStoppedToOperating} is transformed into an operation transition inside the USM class which contains \ti{Stopped}. \ti{Initialize}, \ti{Enable}, \ti{Prepare}, and \ti{Disable} are transformed into operations in the context class \ti{Client}. It is worth noting that there can be several transitions outgoing from a state. Therefore, more than one transition in USM can be mapped to the same qualified name in the tracing table. In order to differentiate different transitions in the intermediate model, the qualified name of a transition operation in the intermediate model is combined with the source state and the triggering event. From this tracing table, it is easy to look back the original USM elements from the elements in the intermediate model in the backward direction. %This transformation can be implemented as an in-place transformation but it would surprise users. Furthermore, the intermediate model should be used only as a bridge to the code and hidden to users. 
+
+\begin{figure}
+\centering
+\includegraphics[clip, trim=2.5cm 22.5cm 10.8cm 2.5cm, width=0.8\columnwidth]{figures/statemachine}
+\caption{An example of USM for tracing table} 
+\label{fig:statemachuine}
+\end{figure}
+
+\begin{comment}
+\begin{table*}[]
+\centering
+\caption{Tracing table of state machine and class intermediate model}
+\label{table:trace}
+\begin{tabular}{|l|l|}
+\hline
+\rowcolor{Gray}
+UML state machine concepts                                                 & UML class concepts                                     \\ \hline
+Root::Client::StateMachine::TopRegion::Stopped (State)                     & Root::Client (Class)                                   \\ \hline
+Root::Client::StateMachine (StateMachine)                                  & Root::Client::PerClass\_Client::StateMachine (Class)   \\ \hline
+Root::Client::StateMachine::TopRegion::Stopped (State)                     & Root::Client::PerClass\_Client::Stopped (Class)        \\ \hline
+Root::Client::StateMachine::TopRegion::Operating (State)                   & Root::Client::PerClass\_Client::Operating (Class)      \\ \hline
+Root::Client::StateMachine::TopRegion::On (CallEvent)                      & Root::Client::PerClass\_Client::On (Class)             \\ \hline
+Root::Client::StateMachine::TopRegion::Initialize(OpaqueBehavior)          & Root::Client::PerClass\_Client::Initialize (Operation) \\ \hline
+Root::Client::StateMachine::TopRegion::Enable (OpaqueBehavior)             & Root::Client::PerClass\_Client::Enable (Operation)     \\ \hline
+\end{tabular}
+\end{table*}
+
+
+\begin{table}[]
+\centering
+\caption{Tracing table of state machine and class intermediate model}
+\label{table:trace}
+\begin{tabular}{|l|l|}
+\hline
+\rowcolor{Gray}
+UML state machine concepts                                                 & UML class concepts                                     \\ \hline
+sPrefix::Client (Class)                     & Root::Client (Class)                                   \\ \hline
+Root::Client::StateMachine  (StateMachine)                                  & tPrefix::StateMachine (Class)   \\ \hline
+sPrefix::Stopped (State)                     & tPrefix::Stopped (Class)        \\ \hline
+sPrefix::Operating (State)                   & tPrefix::Operating (Class)      \\ \hline
+sPrefix::On (CallEvent)                      & tPrefix::On (Class)             \\ \hline
+sPrefix::fromStoppedToOperating (Transition) & tPrefix::StateMachine::transition (Operation) \\ \hline
+sPrefix::Initialize(OpaqueBehavior)          & tPrefix::Initialize (Operation) \\ \hline
+sPrefix::Enable (OpaqueBehavior)             & tPrefix::Enable (Operation)     \\ \hline
+\end{tabular}
+\end{table}
+\end{comment}
+\subsubsection{Code generation}
+\label{subsec:codegen}
+
+The intermediate model is then used as input of a template-based object-oriented code generator. Mappings from UML classes to object-oriented are trivial one-1-one. Listing \ref{lst:code-segment} shows a code segment generated from the USM in Fig. \ref{fig:statemachuine}. The \ti{dispatchEvent} method implemented in the base composite state class delegates the incoming event processing to its active sub-state. If the event is not accepted by the active sub-state, the composite state processes it. \ti{OnEntryAction} and \ti{OnExitAction} overwrite abstract methods which are defined in the base state class and called by the entry and exit methods, respectively. \ti{Stopped} accepts an \ti{On} event by implementing a corresponding \ti{processEvent} method. The transition method from the \ti{Stopped} to the \ti{Operating} state checks the guard condition by calling an associated method in the context class, then executes the transition action, changes the active state and finally enters the target state by calling the entry operation. The machine enters the final state by setting the active state to null meaning that the behavior of the region containing the final state has completed. The generated code statements are identical to the USM semantics and it is easy to modify the behavior of the USM by code. %For example, if we would like to change the default state, we only need to modify the \ti{setInitDefaultState} method by assigning the attribute \ti{activeSubState} to the attribute \ti{operating} that represent an instance of the state \ti{Operating}.
+
+
+\begin{algorithm}[tbp]
+\caption{A segment of C++ generated code \label{lst:code-segment}}
+\lstset{language=C++}
+\begin{lstlisting}
+class CompositeState: public State {
+protected:
+  State* activeSubState;
+public:
+bool dispatchEvent(Event* event) {
+bool ret = false;
+if (activeSubState != NULL) {
+ret = activeSubState->dispatchEvent(event);}
+return ret || event->processFrom(this);}}
+StateMachine::StateMachine(Client* ctx){
+  this->context = ctx;
+  stopped = new Stopped(this, ctx);
+  operating = new Operating(this, ctx);
+  this->setIniDefaultState();
+  this->activeSubState->entry();}
+void StateMachine::setIniDefaultState(){
+  this->context->Initialize();
+  this->activeSubState = stopped;}
+bool StateMachine::transition(
+        Stopped* state, On* event) {
+ if(this->context->guard(event)){
+  this->activeSubState->exit();
+  this->context->Enable(event);
+  this->activeSubState = this->operating;
+  this->activeSubState->entry();
+  return true;}
+return false;}
+bool StateMachine::transition(
+    Operating* state, Off* event) {
+  this->activeSubState->exit();
+  //no action defined
+  this->activeSubState = NULL;
+return true;}
+class Stopped: public State {
+private:
+  StateMachine* ancestor;
+public: 
+virtual bool processEvent(On* event) {
+  return ancestor->transition(this,event);}
+}
+\end{lstlisting}
+\end{algorithm}
+
+
+\subsection{Reverse engineering from code to USM}
+This section describes the backward process. 
+
+\subsubsection{Method Overall}
+%The modifications made to the generated code need to be reversed back to the SM to make the artifacts consistent. 
+The overall method for backward transformation is shown in Fig. \ref{fig:details}. The modified code is first analyzed by partly inspecting the code syntax and semantics to guarantee that it is reversible. There are cases in which not all code modifications can be reversed back to the USM. The analysis also produces an output (\ti{output2}) whose format is described later. If the intermediate model or the original USM is absent (the lower part of Fig. \ref{fig:details}), a new intermediate model and a new USM are created from the UML model. In the contrary, the previous code taken, for instance, from control versioning systems is also semantically analyzed to have its output (\ti{output1}) (the upper part of Fig. \ref{fig:details}). \ti{Output1} and \ti{Output2} are then compared with each other to detect actual semantic changes which are about to be propagated to the original model. 
+
+\begin{figure}
+\centering
+\includegraphics[clip, trim=0.9cm 5.8cm 15.1cm 6.3cm, width=0.8\columnwidth]{figures/details2.pdf}
+\caption{Overall method for reversing code to state machine} 
+\label{fig:details}
+\end{figure}
+
+\subsubsection{Semantic Analysis}
+\label{subsec:verification}
+The output of the semantic analysis contains a list of event names, a list of state names, a list of transitions in which each has a source state, a target state, a guard function, an action function and an event represented in so called abstract syntax tree (AST) transition [15]. 
+For example, Fig. \ref{fig:transitions} presents the EMF \cite{gronback_eclipse_} representation of transitions in a \tb{C++} AST in which \ti{IStructure} and \ti{IFunctionDeclaration} represent a structure and a function in \tb{C++}, respectively. 
+Each state name is also associated with an ancestor state, an entry action, an exit action, a default sub-state and a final state. 
+The output is taken by analyzing the AST. 
+The analysis process consists of recognizing different patterns. 
+The pattern list is as followings:
+
+\noindent
+\tb{State}: A state class inherits from the base state class or the composite base state class. 
+For each state class, there must exist exactly one attribute typed by the state class inside another state class. 
+The latter becomes the ancestor of the state class.
+
+\noindent
+\tb{Composite state}: A composite state class (CSC) inherits from the base composite state. 
+For each sub-state the CSC has an attribute typed by the associated sub-state class. 
+The CSC also implements a method named \ti{setInitDefaultState} to set its default state. 
+The CSC has a constructor is used for initializing all of its sub-state attributes at initializing time.
+
+\noindent
+\tb{Entry action}: If a state has an entry action, its associated state class implements \ti{onEntryAction} that calls the corresponding action method implemented in the context class. 
+
+\noindent
+\tb{Activity/Exit action}: Similar to the entry action pattern but implements \ti{onExitAction}/\ti{onActivity}, respectively. 
+According the USM semantics, if an atomic state has outgoing \ti{triggerless} transitions, \ti{onEntryAction} appeals the \ti{triggerless} transition method of the ancestor state class following the  \ti{onActivity} call. For composite states, the \ti{triggerless} transition method is called after the its active sub-state is a final state (NULL from implementation perspective) and its activity completes. Note that thread-based parallelism of \ti{doActivity} is implicitly implemented (not presented here) and called by the base state classes which are generated by the generator. Therefore, for each state class added to the code side, developers only need to overwrite the appropriate action methods from the base state classes. This facilitates the analysis and extraction of state actions/events to reconstruct USMs from code within the reverse engineering task.
+
+%\tb{Exit action}: Similar to the entry action pattern but implements \ti{onExitAction}.
+
+\noindent
+\tb{Event processing}: If a state has an outgoing transition triggered by an event, the class associated with the state implements the \ti{processEvent} method having only one parameter typed by the event class transformed from the event. 
+The body calls the corresponding transition method of the ancestor class.
+
+\noindent
+\tb{CallEvent} class: A call event class inherits from the base event class. 
+The call event class contains attributes typed by the parameter types of the operation associated with the call event. 
+This pattern is detected if the types of attributes of the event class match with the types of parameters of one of the methods in the context class. 
+There is therefore an ambiguity for an event class to choose an associated operation if more than one operation detected matches the event class. 
+Hence, this pattern poses a restriction that operations associated with events must either have different parameter types or different number of parameters. 
+To overcome this issues, a naming convention used for \ti{CallEvent} classes is used. 
+The event class name is prefixed with the associated operation name. 
+If the event class name does not follow the naming convention, the reverse is refused. 
+Another possible solution targeting this ambiguity is to have a user interaction in case of having more than one operation matching with the event. 
+Having an interaction allows the pattern detection get rid of ambiguity and therefore provides appropriate USM models. 
+A signal event is treated as a \ti{CallEvent} as previously described.
+
+\noindent
+\tb{Time event}: A transition is triggered by a \ti{TimeEvent} if the state class associated with its source state implements the timed interface. 
+The duration of the time event is detected in the transition method whose name is formulated as \ti{"transition" + duration}. 
+
+\noindent
+\tb{Transition}: Transition methods are implemented in the ancestor class, which is the class associated with the composite state owning the source state of the transition. 
+Two types of transition methods correspond to trigger and \ti{triggerless} transitions. 
+Both \ti{parameterize} its source state class. 
+The trigger transition method is associated with the event triggering the transition. 
+The body of external and internal transition methods contains ordered statements including exiting the source state, executing transition action (effect), changing the active state to the target or null if the target is the final state, and entering the changed active state by calling entry. 
+The body can have an if statement to check the guard of the transition. 
+The transition action and the guard are optional. 
+Several if/else statements can appear in a \ti{triggerless} transition method body. 
+The body of local transition methods only checks its guard and executes the transition effect.
+
+\noindent
+\tb{Transition action/guard}: Transition actions and guards are implemented in the context class.
+
+\begin{algorithm}[]
+  \caption{Semantic Analysis
+    \label{alg:semantic-vefrification}}
+  \begin{algorithmic}[1]
+    \Require{AST of code and a list of state classes stateList}
+	\Ensure{Output of semantic analysis}
+    %\Statex
+    	\For {$s$ in $stateList$}
+        	\For {$a$ in attribute list of $s$}
+        		\If {$a$ and $s$ match child parent pattern}
+        			\State put a and s into a state-to-ancestor map;
+        		\EndIf
+        	\EndFor
+        	\For {$o$ in method list of $s$}
+        		\If {$o$ is $onEntryAction$ || $o$ is $onExitAction$}		
+        			\State $analyzeEntryExit(o)$; 	
+        		\ElsIf {$o$ is $processEvent$} 
+        			\State $analyzeProcessEvent(o)$;
+        		\ElsIf {$o$ is $setInitDefaultState$ \& $s$ is composite}
+        			\State $analyzeInitDefaultState(s)$;
+        		\ElsIf {$o$ is timeout \& $s$ is a timedstate}
+        			\State $analyzeTimeoutMethod(o)$;
+        			\State $analyzeProcessEvent(s,o)$;
+        		\EndIf	
+        	\EndFor
+    	\EndFor
+  \end{algorithmic}
+\end{algorithm}
+
+Algorithm \ref{alg:semantic-vefrification} shows the algorithm used for analyzing code semantics. Due to space limitation, \ti{analyzeEntryExit}, \ti{analyzeProcessEvent}, \ti{analyzeInitDefaultState}, \ti{analyzeTimeoutMethod} and \ti{analyzeProcessEvent} are not presented but they basically follow the pattern description as above. In the first step of the analysis process, for each state class, it looks for an attribute typed by the state class, the class containing the attribute then becomes the ancestor class of the state class. The third steps checks whether the state class has an entry or exit action by looking for the implementation of the \ti{onEntryAction} or \ti{onExitAction}, respectively, in the state class to recognize the \ti{Entry/Exit} action pattern. Consequently, event processing, initial default state of composite state and time event patterns are detected following the description as above.  Fig. \ref{fig:partition} shows the partitioning used for matching code segments to USM elements. Each partition consists of a code segment and the corresponding model element which are mapped in the backward direction. For instance, the \ti{Stopped} class in code is detected as a representation since it inherits from the base class \ti{State}.  
+ 
+\begin{comment}
+\begin{figure}
+\centering
+\includegraphics[clip, trim=1cm 4.8cm 0.1cm 0.8cm, width=0.75\textwidth]{figures/backwardmapping.pdf}
+\caption{USM element-code segment mapping partition} 
+\label{fig:partition}
+\end{figure}
+\end{comment}
+
+\begin{figure*}
+\centering
+\includegraphics[clip, trim=1.8cm 5.55cm 2.1cm 3.8cm, width=1\columnwidth]{figures/bkwmapping.pdf}
+\caption{USM element-code segment mapping partition} 
+\label{fig:partition}
+\end{figure*}
+
+\begin{figure}
+\centering
+\includegraphics[clip, trim=0cm 0.6cm 0.0cm 0.6cm, width=\columnwidth]{figures/asttransition}
+\caption{Transitions output from the analysis} 
+\label{fig:transitions}
+\end{figure}
+
+\subsubsection{Construction of USM from analysis output}
+If an intermediate model is not present, a new intermediate model and a new USM are created by a reverse engineering and transformation from the output of the analysis process. The construction is straightforward. At first, states are created. Secondly, UML transitions are built from the AST transition list. Lastly, action/guard/triggering event of a UML transition is created if the associated AST transition has these.
+
+\subsubsection{Updating the original USM from modified code}
+In contrast to the previous sub-section, if an intermediate model is existing, lists of states and transitions are retrieved from the intermediate model. 
+%The output of the verification process and that of the intermediate model transformation are compared to each other to detect semantics changes of the modified code. 
+The algorithm for detecting state and transition changes is not presented here due to space limitation. Basically, the algorithm takes as input lists of state names, transitions, ancestor maps, which link a state name to its parent state name, extracted from the intermediate model and the modified code, respectively. The algorithm results in lists of state names, transitions to be added/deleted/updated/moved. It first examines the list of state names extracted from the modified code $Lc$ to find which state to be added. A state is considered as a to-be-updated state if its name exists in both of the two lists of state names and its ancestor names in both of the ancestor maps are identical. If the latter condition is not satisfied, the state is considered as being moved to another composite state. Remaining states (not added/updated/moved) in the state list extracted from the intermediate model are added to the to-be-deleted state list. The transition and event change detection is similar to that of states but, due to the space limitation, it is not detailed. For transition change detection, instead of checking by name, the source and target state names of transitions and the associated event name in transitions are used.
+%It first examines the list of state names extracted from the modified code $Lc$ for states that are not existing in the list of state names of the intermediate model $Li$ to be added to the added state list. If a state $c$ in $Lc$ is present in $Li$, $c$ is either added to the updated list if the ancestor states associated with $c$ in the intermediate model and the modified code are the same, or $c$ is considered as being moved to another ancestor state. Other states in $Li$ are added to the deleted state list. The transition and event change detection is similar to that of states but, due to the space limitation, it is not detailed. For transition change detection, instead of checking by name, the source and target state names of transitions and the associated event name in $Tc$ and $Ti$ are used. 
+
+The changes detected by the algorithm are then used in a change propagation step which updates the original USM. Events, states and transitions are sequentially processed in order. The processing of elements to be deleted results in deleting corresponding elements in the USM. As previously described, the mapping information for elements in code and the intermediate model is also stored in a table. Each to-be-deleted element in code is associated with an element in the intermediate model. Therefore, it is trivial to retrieve the model element in the intermediate model associated with the to-be-deleted element.
+
+The found model element in turn helps identify the associated element in the USM by using the mapping table between the USM and the class model. For each deleted event in code, the associated event class in the class model and the event in the USM are deleted. Deleted states and transitions are similarly propagated. A deletion of a transition includes deleting its guard, triggers and transaction action. 
+
+\begin{comment}
+\begin{algorithm}[H]
+  \caption{Change detection
+    \label{alg:change-detect}}
+  \begin{algorithmic}[1]
+    \Require{$Li$, $Lc$, $Ti$, $Tc$, $mapI$, $mapC$ are lists of state names, transitions, ancestor map extracted from intermediate model and modified code, respectively}
+	\Ensure{$adS$, $delS$, $uptS$, $movS$ are lists of added, deleted, updated and moved states respectively. $adT$, $delT$, $uptT$ are lists of added, deleted and updated transitions}
+    %\Statex
+    	\For {$c$ in $Lc$}
+        	\If {!$Li$.contains($c$)} 
+				\State adS.put(c);
+        	\Else
+				\If {$mapC$.get($c$) = $mapI$.get($c$)}
+	    			\State uptS.put(c);
+				\Else 
+	    			\State $movS$.put($c$, $mapI$.get($c$), $mapC$.get($c$))	
+                \EndIf
+                	\State $Li$.remove($c$);
+        	\EndIf
+    	\EndFor
+    	\For {$i$ in $Li$} 
+        	\State $delS$.put($i$)
+    	\EndFor
+    	\For {$c$ in $Tc$}
+        	\State $found$ = NULL
+        	\For {$i$ in $Ti$}
+				\If {$c$.source=$i$.source \& $c$.target=$i$.target \& $c$.event = $i$.event}
+	    			\State $found$ = $i$;
+              	\EndIf
+             \EndFor 	
+        	\If {$found$ != NULL} 
+				\State $uptT$.put($c$);
+				\State $Ti$.remove($found$);
+        	\Else
+				\State $adT$.put($c$);
+        	\EndIf
+    	\EndFor
+    	\For {$t$ in $Ti$}
+        	\State $delT$.put($t$);
+    	\EndFor
+  \end{algorithmic}
+\end{algorithm} 
+\end{comment}
+
+\begin{comment}
+\begin{algorithm}[H]
+  \caption{Change detection
+    \label{alg:change-detect}}
+  \begin{algorithmic}[1]
+    \Require{$Li$, $Lc$, $Ti$, $Tc$, $mapI$, $mapC$ are lists of state names, transitions, ancestor map extracted from intermediate model and modified code, respectively}
+	\Ensure{$adS$, $delS$, $uptS$, $movS$ are lists of added, deleted, updated and moved states respectively. $adT$, $delT$, $uptT$ are lists of added, deleted and updated transitions}
+    %\Statex
+    	\For {$c$ in $Lc$}
+        	\If {!$Li$.contains($c$)} 
+				\State adS.put(c);
+        	\Else
+				\If {$mapC$.get($c$) = $mapI$.get($c$)}
+	    			\State uptS.put(c);
+				\Else 
+	    			\State $movS$.put($c$, $mapI$.get($c$), $mapC$.get($c$))	
+                \EndIf
+                	\State $Li$.remove($c$);
+        	\EndIf
+    	\EndFor
+    	\For {$i$ in $Li$} 
+        	\State $delS$.put($i$)
+    	\EndFor
+    	\State $detect transition changes$;
+  \end{algorithmic}
+\end{algorithm} 
+\end{comment}
+
+For each event class added to code, a UML class is added to the intermediate model and a UML event to the USM. For each added state class, its ancestor state is retrieved through the mapping tables, a new state is then created as a sub-state of the ancestor state. Entry and exit actions are added to the new state afterward. A moved state is handled by looking for the associated state, the old and new ancestor state in the USM, and moving the associated state to the new ancestor state. Each added transition is propagated by creating a new transition in the USM and retrieving source and target states from the mapping tables. An update is executed by looking in the mapping tables for elements in the USM associated with elements updated in code. %It is worth noting that this algorithm detects a renaming of an event or state as a deletion followed by an addition. 
+
+
+  
+For example, assuming that we need to adjust the USM example shown in Fig. \ref{fig:statemachuine} by adding a guard to the transition from \ti{Operating} to the final state. The adjustment can be done by either modifying the USM model or the generated code. In case of modifying code, the associated transition function in Listing \ref{lst:code-segment} is edited by inserting an \ti{if} statement which calls the guard method implemented in the context class. The change detection algorithm adds the transition function into the updated list since it finds that the source state, the target state and the event name of the transition is not changed. By using mapping information in the mapping table, the original transition in the USM is retrieved. The guard of the original transition is also created. 	
+
+
+
+
+

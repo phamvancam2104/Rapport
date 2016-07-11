@@ -1,0 +1,263 @@
+\subsection{Simulations to assess synchronization processes}
+\label{sec:simulation}
+
+Simulations have been conducted to test that the implementation of
+our proposition respects the round-trip engineering
+laws \cite{Foster:2007:CBT:1232420.1232424}
+\ti{right-invertibility} and \ti{left-invertibility}.
+These laws are stated as follows:
+
+%The RTE takes as input the previous consistent model and code and their edited versions and outputs the updated artifacts: \ti{rte(m, c, m*, c*) = ($m_{updated}, c_{updated}$)}. A round-trip must satisfy two laws, namely, \ti{right-invertibility} and \ti{left-invertibility} stated as followings:
+
+\noindent
+\tb{Law 1}: Right-invertibility means that
+not editing the code (or model, respectively) shall be reflected
+as not editing the model (respectively code).
+If no editions are made to the code, the model used for generating the code and the model received by
+immediately reversing the generated code must be the same.
+
+\noindent
+\tb{Law 2}: Left-invertibility means that all editions
+on the code are captured and correctly
+propagated to the model
+so that the edited code can be fully recreated by applying code generation to the updated model.
+
+In the following sections, the model generator used for the simulations is
+presented first. Then, the simulations performed for both above laws are described.
+Finally, we discuss the simulation of the process defined for scenario 3 (Section \ref{sec:scenario3}), in which both the model and the code are edited concurrently.
+
+\subsubsection{Randomly generated UML models}
+
+In the simulations, random UML models are generated
+with a configurable model generator.
+The generated models contain C++ features represented via UML.
+The generator can be configured to generate a desired average number of each type of C++ feature to be represented as a UML element.
+
+Three packages are generated for each model.
+Each package contains 60 classes, and, on the average
+10 enumerations, 10 structures, and
+10 function pointers. Class members include
+methods with parameters, and attributes.
+
+Types of parameters and attributes are chosen randomly.
+Methods have randomly generated bodies that use other classes.
+Attributes have randomly generated default values of the appropriate types.
+
+Relationships between
+classes are also generated: associations, inheritances, and dependencies.
+When dependencies are generated, the generator enforces that the source
+class of the dependency has a method that uses the target class of the dependency.
+
+%Some parameters of the model generator are shown in Table \ref{table:info-setup}.
+%
+%% TODO I don't know if the table itself is useful.
+%\begin{table}[]
+%\centering
+%\caption{Appearance probabilities and information for setting up the model generator}
+%\label{table:info-setup}
+%\begin{tabular}{|l|l|}
+%\hline
+%\rowcolor{Gray}
+%Generator configuration                                   & Value            \\ \hline
+%Number of packages                                        & 3 \\ \hline
+%Number of classes per package                             & 60              \\ \hline
+%Number of attributes per class                            & 30               \\ \hline
+%Attribute appearance probability                          & 0.5              \\ \hline
+%Probability of having an attribute default value          & 0.3              \\ \hline
+%Number of methods per class                               & 15               \\ \hline
+%Probability of appearance for a method                    & 0.5              \\ \hline
+%Number of parameters per operation                        & 4                \\ \hline
+%Probability of appearance for a parameter                 & 0.5              \\  \hline
+%Maximum number of generalizations                         & 300              \\ \hline
+%Number of data types per package                          & 10               \\ \hline
+%Probability of appearance for a structure                 & 0.3              \\ \hline
+%Number of enumerations per package                        & 10               \\ \hline
+%Probability of appearance for an enumeration              & 0.3              \\ \hline
+%Number of function pointers per package                   & 10               \\ \hline
+%Probability of appearance for a function pointer          & 0.3              \\ \hline
+%\end{tabular}
+%\end{table}
+
+\subsubsection{Simulation for Law 1 right-invertibility}
+
+In the first simulation, Law 1 is evaluated. The procedure for the simulation is shown
+in Figure \ref{fig:simulation1}.
+
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{figures/simulation1}
+\caption{Simulation 1 for Law 1 (right-invertibility)} 
+\label{fig:simulation1}
+\end{figure}
+
+The general idea behind the simulation procedure is to
+do a full round-trip of the UML model randomly generated in step \textbf{(1)}.
+The round-trip of the model is done through steps \textbf{(2)} to \textbf{(3)}.
+The randomly generated model is compared with the reversed model after the round-trip. This is done in step \textbf{(5)}.
+
+A full round-trip is also done for the C++ code that is generated
+from the original randomly generated model in step \textbf{(2)}.
+The round-trip is done through steps \textbf{(3)} to \textbf{(4)}. 
+The code generated from the original
+model is compared with code generated from the reversed model
+in step \textbf{(6)}.
+
+Code generation and reverse are done in batch mode since
+no editions are made to the models or code in this simulation.
+Comparison of models is done by first comparing the number of each type of elements. If these numbers match, EMF Compare is used.
+Comparison of code is done by using the built-in code comparison tool in the Eclipse CDT.
+
+Table \ref{tab:generated_models} shows the number of each type of elements in the randomly
+generated model,
+and the comparison results, for 3 of the 200 models created by the generator.
+We limited ourselves to 200 models for practical reasons.
+These same models were later used for a simulation that involved some manual editions (presented
+in the next subsection).
+
+After launching the simulation for the 200 models, no differences
+were found during model comparison and code comparison.
+This result assesses that the tooling of our model-code synchronization approach
+with respect to Law 1 of round-trip engineering.
+
+\begin{table*}[]
+\centering
+\caption{Three of 200 generated models for simulation 1: Abbreviations are classes (\tb{C}), methods (\tb{M}), method parameters (\tb{P}), attributes (A), associations (\tb{AS}), inheritances (\tb{G}), method body (\tb{B}), dependencies (\tb{D}), enumerations (\tb{E}), structures (\tb{S}), default values (\tb{DV}), function pointers (\tb{F})}
+\label{tab:generated_models}
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|l|l|l|p{4pc}|p{4pc}|}
+\hline
+\rowcolor{Gray}
+Model ID & C   & M    & P    & A    & AS   & G   & B    & D   & E  & S & DV  & F  & Differences in models? & Differences in code?\\ \hline
+1        & 180 & 1419 & 2683 & 1835 & 1053 & 179 & 1138 & 507 & 13 & 7 & 150 & 11 & No & No\\ \hline
+2        & 180 & 1437 & 2718 & 1874 & 1074 & 179 & 1157 & 512 & 10 & 9 & 167 & 9  & No & No\\ \hline
+..       & ..  & ..   & ..   & ..   & ..   & ..   & ..  & .. & ..& ..  & ..  & .. & No & No\\ \hline
+200      & 180 & 1413 & 2629 & 1857 & 1018 & 179 & 1127 & 517 & 13 & 9 & 150 & 13 & No & No\\ \hline
+\end{tabular}
+\end{table*}
+
+\subsubsection{Simulation for Law 2 left-invertibility}
+\label{sec:simulation2}
+
+In the second simulation, Law 2 was evaluated. The procedure for the simulation is shown
+in Figure \ref{fig:simulation2}.
+
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{figures/simulation2}
+\caption{Simulation 2 for Law 2 (left-invertibility)} 
+\label{fig:simulation2}
+\end{figure}
+
+The general idea behind the simulation procedure is to
+do a full round-trip of a randomly generated UML model,
+but with editions introduced to the generated C++ code.
+As shown in Figure \ref{fig:simulation2}, the
+procedure to test our tooling consisted of the following steps:
+
+\begin{description}
+	\item[Step 1] A UML model is randomly generated and becomes the \textbf{generated model}.
+	\item[Step 2] Through batch code generation, we obtain \textbf{code from generated model}.
+	\item[Step 3] The code produced from generated model is then edited.
+	We thus obtain \textbf{edited code}.
+	The different kinds of editions will be described
+	when we discuss the results of this simulation.
+	\item[Step 4] The \textbf{edited code} is reversed incrementally to the \textbf{generated model}.
+	The \textbf{generated model} then becomes an \textbf{updated model}.
+	\item[Step 5] The \textbf{edited code} is also reversed in batch mode
+	to a \textbf{model from edited code}.
+	This model is an image of the edited code.
+	\item[Step 6] The \textbf{updated model} (the previously \textbf{generated model})
+	is compared to the \textbf{model from edited code} (image of the edited code).
+	\item[Step 7] Afterwards, we also generate in batch mode \textbf{code from the updated model}.
+	\item[Step 8] The \textbf{code from the updated model} is compared to the \textbf{edited code}.
+\end{description}
+
+The simulation is run for 200 randomly generated models.
+We limited ourselves to 200 models because in step \textbf{(3)}, some of the editions
+have to be done manually to emulate real development conditions.
+Therefore the limit of 200 models is purely based on practical concerns.
+
+During the simulations, the code generated from each model undergoes seven kinds of
+editions independently (the kinds of editions performed are listed in Table \ref{tab:change_description}).
+As its name suggests, only "Manual editions" were done manually by a developer, to emulate
+actual development conditions.
+
+The editions triggered three kinds of Eclipse CDT modification events:
+\texttt{ADDED}, \texttt{REMOVED}, and \texttt{CHANGED}. Events \texttt{ADDED} and \texttt{REMOVED}
+mean addition and deletion
+of classes, attributes or methods to the code.
+Event \texttt{CHANGED} is the update of elements in code including
+(1) renaming attributes, classes, or methods, (2) changing the
+type of attributes, parameters, or (3) changing the behavior of methods.
+
+Table \ref{tab:change_description} shows the average number of \texttt{ADDED}, \texttt{REMOVED}, and \texttt{CHANGED} events
+that were triggered by each of the seven kinds of editions. The last two columns
+show the results of model comparison and code comparison for all 200 simulations following
+each kind of edition (the editions are made independently).
+
+\begin{table}[]
+\centering
+\caption{Editions and the modifications events they trigger (A = \texttt{ADDED}, C = \texttt{CHANGED}, R = \texttt{REMOVED})}
+\label{tab:change_description}
+\begin{tabular}{|p{2cm}|l|l|l|l|l|}
+\hline
+\rowcolor{Gray}
+Edition kind                                              & A   & C    & R   & \begin{tabular}[c]{@{}l@{}}Model\\diff?\end{tabular} & \begin{tabular}[c]{@{}l@{}}Code\\diff?\end{tabular} \\ \hline
+Renaming attributes of all classes                             &  0  & 1903 &  0   & \multicolumn{1}{c|}{No} & \multicolumn{1}{c|}{No} \\ \hline
+Renaming methods of all classes                                &  0  & 1197 &  0   & \multicolumn{1}{c|}{No} & \multicolumn{1}{c|}{No} \\ \hline
+Deleting attributes                                            &  0  &    0 & 46   & \multicolumn{1}{c|}{No} & \multicolumn{1}{c|}{No} \\ \hline
+Adding attributes                                              & 25  &    0 &  0   & \multicolumn{1}{c|}{No} & \multicolumn{1}{c|}{No} \\ \hline
+Adding methods                                                 & 10  &    0 &  0   & \multicolumn{1}{c|}{No} & \multicolumn{1}{c|}{No} \\ \hline
+Changing method body                                           &  0  & 30   &  0   & \multicolumn{1}{c|}{No} & \multicolumn{1}{c|}{No} \\ \hline
+Manual editions                                           & 39  & 34 & 30   & \multicolumn{1}{c|}{No} & \multicolumn{1}{c|}{No} \\ \hline
+\end{tabular}
+\end{table}
+
+For all 200 models, no differences
+were found during model comparison and code comparison.
+This result assesses that the tooling of our model-code synchronization approach
+with respect to Law 2 of round-trip engineering.
+
+\subsubsection{Simulation for concurrent edition of model and code}
+
+A third simulation aims at emulating the process described in Figure \ref{fig:scenario3} of Section \ref{sec:scenario3},
+in which the model and the code are concurrently edited.
+A simplified representation of the procedure of simulation 3 is shown in Figure \ref{fig:simulation3}.
+The simulation is executed for 200 randomly generated
+UML models and their generated C++ code.
+
+\begin{figure}
+\centering
+\includegraphics[width=6.5cm]{figures/simulation3}
+\caption{Simulation 3 for concurrent editions case}
+\label{fig:simulation3}
+\end{figure}
+
+The idea behind the procedure in Figure \ref{fig:simulation3} is to simulate editions in the original randomly generated model,
+and its corresponding generated code (step \textbf{(1)} to \textbf{(4)}).
+To simplify the simulation, the simulator only introduces attribute renaming model-side.
+On the code-side, the simulator only makes editions to method bodies.
+Edited model and code must then be synchronized and then we must assess that they are
+indeed synchronized. This is done in step \textbf{(5)}.
+
+To synchronize edited model
+and edited code, first we use the strategy based on code as the synchronization artifact. 
+The simulator propagates all method body editions from the edited code to the synchronization
+artifact. The simulator then propagates all attribute renaming from the synchronization
+artifact to the edited code. Next, the synchronization artifact is reversed incrementally to
+produce the edited model. At this point the model and the code are considered synchronized.
+
+To assess that both synchronized model and code are images of one another, the synchronized code was
+reversed in batch mode to a new model. The new model was then compared with the synchronized model. No
+differences were found during these simulations. We also generated new code in batch mode
+from the synchronized model. The new code was compared to the synchronized code. No differences
+were found during the comparison.
+
+The same simulation is repeated for the case where the model is used as synchronization
+artifact. Again the synchronized code and model were images of one another.
+%Therefore with this example of concurrent edition of model and code,
+%our proposition is tested.
+
+Once the tooling of the proposed model-code synchronization approach
+was verified through the three simulations,
+we decided to apply it to the development of a practical real-world system.
+The results of this experiment are discussed in the next section.

@@ -1,0 +1,54 @@
+\subsubsection{Thread-based concurrency analysis} 
+
+%While concurrency is an important aspect defined by the UML State machine specification, especially hierarchical and concurrent state machines with \ti{doActivity}s for states, most of existing approaches do not take into account. This is non-trivial since concurrency is dynamic in UML state machine and the number of threads used for concurrency is non-deterministic.
+
+
+
+Let us give an analysis on the state machine example in Fig. \ref{fig:example}. Assuming that \ti{Idle} is the current active state and a \ti{verifyPIN} event is coming. 
+The \ti{doActivity} behavior of \ti{Idle} \ti{doActivity(Idle)} (if has) is terminated, \ti{exit(Idle)} and the \ti{effect(t2)} (\ti{T2Effect}) are executed sequentially. 
+These actions are run in a state machine main thread which reads incoming events from a "first in, first out" (FIFO) priority queue. 
+Fig. \ref{fig:threading1} shows the activity diagram representing the concurrency processing \ti{verifyPIN}, in which each partition represents a thread. 
+\ti{effect(t3)} and \ti{effect(t3)} are run concurrently in two threads \ti{T3Run} and \ti{T4Run}, respectively, since the transitions owning these effects outgo from a fork pseudo state. 
+The entry action \ti{entry(Verifying)} is executed following the termination of the two threads. 
+
+UML says that \ti{doActivity(Verifying)}, \ti{entry(VerifyingCard)} and \ti{entry(VerifyingPIN)} should be concurrently executed upon the completion of \ti{entry(Verifying)}, which is represented by a fork node, in which a \ti{Start} signal is sent to \ti{VerifyingDoRun} in order for commencing \ti{doActivity(Verifying)}. 
+The executions of the \ti{doActivity}s of the states \ti{VerifyingCard} and \ti{VerifyingPIN} are also concurrent. 
+Also, upon the completion of \ti{entry(VerifyingCard)} and \ti{entry(VerifyingPIN)}, the main thread completes the processing of the \ti{verifyPIN} event, reads next events from the queue or waits for next event occurrences.
+
+\begin{figure}
+	\centering
+	\includegraphics[clip, trim=1.0cm 1.6cm 1.6cm 1cm, width=1.03\columnwidth]{figures/ThreadingExample.pdf}
+	\caption{Concurrency of the ATM when receiving the \ti{verifyingPIN} event} 
+	\label{fig:threading1}
+\end{figure}
+
+If no event is coming, and \ti{doActivity(VerifyingCard)} and \ti{doActivity(VerifyingPIN)} are long actions (e.g. forever loops inside), the state machine remains its active configuration and three concurrent actions including \ti{wait for events}, \ti{doActivity(VerifyingCard)}, and \ti{doActivity(VerifyingPIN)} are permanently run.
+
+The termination time of \ti{doActivity(VerifyingCard)} and \ti{doActivity(VerifyingPIN)} is non-deterministic. 
+However, a completion event is generated and pushed to the event queue whenever one of the two completes. 
+
+\begin{comment}
+For illustration, assuming that \ti{doActivity(VerifyingCard)} terminates before \ti{doActivity(VerifyingPIN)}. 
+As in Fig. \ref{fig:threading2}, the Main thread checks the \ti{CompletionEvent}. \ti{exit(VerifyingCard)} and \ti{effect(t5)} are then executed sequentially. If \ti{cardValid} is computed as true as the result of \ti{doActivity(VerifyingCard)} and \ti{exit(VerifyingCard)}, the Main thread simply executes \ti{effect(t6)} and \ti{entry(CardValid)} before waiting for other events.
+
+In contrast, Main sends a signal to stop \ti{doActivity(VerifyingPIN)} and \ti{doActivity(Verifying)}, executes exit, transition and entry actions in an appropriate order (see Fig. \ref{fig:threading2}) and waits for other events.
+
+\begin{figure}
+\centering
+\includegraphics[clip, trim=1.5cm 1.6cm 1.6cm 1.2cm, width=1.03\columnwidth]{figures/ThreadingExample2.pdf}
+\caption{Concurrency of the ATM when \ti{doActivity} of \ti{VerifyingCard} completes before that of \ti{VerifyingPIN}}
+\label{fig:threading2}
+\end{figure}
+\end{comment}
+
+We see that the number of concurrent actions is not constant but changes timely. 
+Each action can either deterministically or non-deterministically terminate. 
+In this sense, deterministic actions (DAs) prevent the Main thread from going to the waiting-for-event point. 
+In other words, pending events in the queue are only read and processed once all deterministic actions complete. Therefore, we re-define the run-to-completion paradigm of UML state machine as following:
+ 
+\begin{definition}
+	Run-to-completion means that, in the absence of exceptions or asynchronous destruction of the context	class object or the state machine execution, a pending Event occurrence is dispatched only after the completion of all deterministic actions commenced by the processing of the current event. 
+	At this point, a stable state configuration has been reached
+\end{definition}
+
+%In the example, some of DAs are as followings: \ti{effect(t2)}, \ti{effect(t4)}, \ti{entry(Verifying)}, \ti{entry(VerifyingCard)}, and non-deterministic actions (NDAs) as followings: \ti{doActivity(Verifying)}, \ti{doActivity(VerifyingCard)} and \ti{doActivity(VerifyingPIN)}.

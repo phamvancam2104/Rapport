@@ -1,0 +1,5 @@
+On the concurrent versioning of metamodels and models: challenges and possible solutions --- http://dl.acm.org/citation.cfm?id=2000414&CFID=772446178&CFTOKEN=12521487
+Assessing the quality of model-comparison tools: a method and a benchmark data set --- http://dl.acm.org/citation.cfm?id=2000412&CFID=772446178&CFTOKEN=12521487
+
+CCS => Software and its engineering => Software creation and management => Collaboration in software development => Programming teams --- http://dl.acm.org/ccs/ccs.cfm?id=10011135&lid=0.10011007.10011074.10011134.10011135&CFID=772446178&CFTOKEN=12521487
+CCS => Software and its engineering => Software creation and management => Software post-development issues => Software reverse engineering  http://dl.acm.org/ccs/ccs.cfm?id=10003465&lid=0.10011007.10011074.10011111.10003465&CFID=772446178&CFTOKEN=12521487

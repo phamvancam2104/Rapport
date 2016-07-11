@@ -1,0 +1,251 @@
+%TODO
+%Topics to consider:
+%
+%- RTE model/code
+%  * Cam's stuffs
+%  * Acceleo for architecture/body RTE
+%  * Aspect Oriented-based Software Synchronization in Automatic Measurement Systems
+%- Model-model synchronization ---> Basically justify our stuffs by saying we use model sync as a mean, and we have a generic pattern, where you just plug other people's model sync techniques. Also same format during sync, so easier to use, especially in case of conflicts.
+%  * Google search model synchronization
+%  * Tracing evolution changes of software artifacts through model synchronization
+%  * Towards automatic model synchronization from model transformations ----> They use ATL. Restricted to a technology. But their artifacts are related by model transformation, which is the case for us too (code must ben generated from model). Human intervention not allowed? They use differentiating of states, while we listen to change events. I.e. Class1 becomes Class2 we can detect this, while they will detect Class1 added, Class2 deleted. Also they always sync two models in two forms while we propose to sync, while having an image so we can use one form. Furthermore they don't handle well reflectable changes target side, i.e. I change the name of a class target side, I can't get it to sync source side? Also they only consider model sync, not the social aspect (this is not bs since we define actors). We use a synchronization artifact in the format the the dev wants to use.
+%  * From model transformation to incremental bidirectional model synchronization
+%  * Incremental model synchronization with triple graph grammars
+%  * Model synchronization at work: keeping SysML and AUTOSAR models consistent
+%  * Concurrent Model Synchronization with Conflict Resolution Based on Triple Graph Grammars
+%  * Framework-Specific Modeling Languages with Round-Trip Engineering
+%- Using viewpoints and synchronizing them: Use viewpoints to represent different aspect of the system. In our case it means architecture in UML viewpoint, and body in C++ viewpoint. The for example verify that composite structure viewpoint is valid according to the class definition viewpoint. Or verify that architecture viewpoints satisfy the requirements viewpoint. I guess this might be similar to model-model synchronization, except several viewpoints can represent the same model.
+%  X ViewPoint-oriented software development by distributed graph transformation: towards a basis for living with inconsistencies
+%  * A Viewpoint Model for Cooperative Building of an Ontology
+%  X Change Management in Multi-Viewpoint System Using ASP
+%  X ViewPoint Oriented Software Development, Anthony Finkelstein, Jeff Kramer, -->  Michael Goedicke <---
+%  * VIEWPOINTS: A FRAMEWORK FOR INTEGRATING MULTIPLE PERSPECTIVES IN SYSTEM DEVELOPMENT, http://www.worldscientific.com/doi/abs/10.1142/S0218194092000038
+%  * ViewPoint oriented software development: Methods and viewpoints in requirements engineering
+%  * ViewPoint-Oriented Software Development: Tool Support for Integrating Multiple Perspectives by Distributed Graph Transformation
+%  * Early aspects: a model for aspect-oriented requirements engineering
+%  * Agent Oriented Software Engineering with INGENIAS
+%- Graphical vs textual
+%  * Google search graphical textual programming, graphical programming, textual programming, visual programming
+%  * === graphical vs textual ===
+%  X Scaling up visual programming languages 
+%  X Lack of Keyboard Support Cripples Block-Based Programming
+%  X Visual Programming Languages and the Empirical Evidence For and Against
+%  X Blocks Versus Text: Ongoing Lessons from Bootstrap
+%  X End-User Experiences of Visual and Textual Programming Environments for Arduino
+%  X Are visual programming languages better? The role of imagery in program comprehension
+%  X Comparing the comprehensibility of textual and graphical programs
+%  X Why looking isn't always seeing: readership skills and graphical programming: different interpretation of same visual and textual program
+%  * === end ===
+%  * === Integrating graphical with textual ===
+%  X Heterogeneous visual languages-integrating visual and textual programming - integrating visual with textual
+%  X Unifying Textual and Visual: A Theoretical Account of the Visual Perception of Programming Languages
+%    "This work suggests that the gap between textual and graphical languages is narrow, and that all kind of programming languages should rely on the capability of the human visual system."
+%  * LIVE-Integrating visual and textual programming paradigms
+%  * Languages and tools for the graphical and textual system independent programming of programmable logic controllers
+%  * Visual language as a mean of communication in the field of information technology 
+%  * === end ===
+%  * === Some graphical languages
+%  * Blocks and Beyond workshop http://cs.wellesley.edu/~blocks-and-beyond/schedule.html
+%  * 2nd Workshop on Graphical Modeling Language Development http://www.dsmforum.org/events/GMLD13/
+%  * Comparing the comprehensibility of textual and graphical programs
+%  * Prograph: a step towards liberating programming from textual conditioning
+%  * ALF
+%  * The CODE 2.0 graphical parallel programming language
+%  * Simulink, LabVIEW
+%  * Visual programming languages: A survey M Boshernitsan, MS Downes - 2004 - Citeseer
+%  * Arduino
+%  * === end ===
+%- Software maintenance
+%  X Mental models and software maintenance
+%  X Program comprehension during software maintenance and evolution
+%- (Stakeholders collaboration)
+%  * Collaboration in Software Engineering: A Roadmap
+%  * Collaboration Tools for Global Software Engineering
+%
+%Big themes:
+%- Our technical work ==>
+%  * Synchronization and co-evolution: model-code, model-model, viewpoints
+%- We want to let each developer use what he wants ==>
+%  * Comprehension: visual vs textual, software maintenance based on program comprehension
+%  * Integrating visual and textual: integrating both
+%
+%The paragraphs breakdown:
+%§4: Visual vs textual, which is better? For comprehension? (transition: we argue code is a viewpoint and so we compare it with diagram-based viewpoint)
+%§3: Viewpoints synchronization (transition: several viewpoints for a model)
+%§5: Visual AND textual (transition: but like us, some work think visual and textual can co-exist, so each dev can use the best that suits his/her comprehension [shit under software maintenance topic])
+%§1: Model-code RTE tools
+%§2: Model sync research works (transition: model sync is generalization of model-code RTE)
+
+\section{Related Work}
+\label{sec:related_works}
+
+Our work is motivated by the desire to reduce the gap between
+model and code, between diagram-based languages and textual languages.
+We use automation-supported model-code synchronization as a means to achieve this goal.
+In the following sections, we compare our propositions to related works recorded in the literature.
+
+\subsection{Comparison of diagram-based and textual languages}
+
+Diagram-based languages, also called graphical languages, are a subset of visual languages,.
+A number of efforts were undertaken that compared textual languages and visual languages.
+
+Many works \cite{schanzer_blocks_2015, petre_why_1995}
+discuss the pros and cons of visual languages, compared
+to textual languages, in various contexts. Others \cite{brown_position_2015}
+discuss what limits 
+the adoption of visual languages.
+
+Contrary to these works, we do not strictly oppose textual languages to visual languages like
+diagram-based languages.
+Instead, we prefer to blur the boundaries between them.
+The idea that visual languages can co-exist with textual languages
+has been noted by other authors.
+%Others suggest that the gap between visual languages and textual languages is not as huge
+%as it is perceived by both the MDE and software engineering communities.
+
+In \cite{conversy_unifying_2014} the authors argue
+that the gap between textual and visual languages is narrow.
+They propose a framework to represent code in a visual language
+to improve comprehension of the code.
+
+In \cite{erwig_heterogeneous_1995} the authors
+propose a generic framework to use both visual and textual languages at the same time.
+The visual artifacts are translated to textual code. Much importance
+is given to the human factor, i.e. the framework can be customized based on developer preferences.
+
+In domains such as requirements engineering,
+tools, such as IBM Rational Doors \cite{ibm_doors_2016}
+and Visure Requirements \cite{visure_visure_2016},
+are conscious of the importance of supporting requirements written
+traditionally in plain text by developers.
+These tools allow the transformation of requirements written
+in a textual human language to use-cases and structured requirements.
+
+However, none of these systems are intended to support full implementation of a system. Generally, one of the artifact
+is only used to assist comprehension. There is no need for synchronization between artifacts because
+the transformation only proceeds in one direction.
+
+Our argument that, in order to be more efficient, developers should not be forced to choose between
+a diagram-based or textual language, is directly related to software comprehension.
+Works \cite{von_mayrhauser_program_1995}
+that emphasize the role of software comprehension, for
+efficient software maintenance and evolution, date back to as far as the late eighties/early nineties.
+In our work we consider specifically both software architects and programmers.
+The former generally foster diagram-based languages
+for architecture description and comprehension.
+The latter prefer textual languages since they are deemed much more expressive
+for specifying fine-grained algorithms, for example.
+
+\subsection{Artifact synchronization}
+
+Our work is also closely related to synchronization of different artifacts used for development.
+In the following paragraphs, our model-code synchronization approach is compared to works
+on model-code round-trip engineering,
+viewpoint synchronization,
+and model synchronization.
+
+\paragraph{Round-trip engineering of model and code}
+
+% RTE tools
+
+Several commercial and open-source tools \cite{EA, ibm_rational_2016, Magicdraw, umlgen} support round-trip engineering between UML models and code.
+Systematic reviews of some of these tools are available in \cite{Cutting2015}.
+%Support for Java round-trip is prominent in most tools.
+%Other languages such as C++ are only available in a few tools \cite{ibm_rational_2016, umlgen, Magicdraw}.
+%Our methodological pattern does not focus on a particular programming language
+%or a particular modeling language. Furthermore, the current implementation of our approach is dedicated
+%to UML and C++, which is less supported by tools than Java.
+Usually these tools only support architectural elements on the model-side.
+The model cannot be used for full implementation and
+dependencies derived from
+method bodies are not considered during the round-trip. In our work, we assume that
+the model can be used for full implementation. Furthermore, our implementation analyzes
+C++ method bodies not only to reverse them to UML, but also to derive dependencies in the UML model.
+Some tools \cite{EA} only allow
+one of the artifacts, model or code, to be edited at a certain time.
+There is then no problem of synchronizing model and code since there are no concurrent changes, which limits their applicability.
+Finally, some tools \cite{umlgen} do not support a real incremental reverse or code generation;
+instead, they treat change (e.g. renaming) as deletion followed by addition.
+
+% RTE restriction
+Some round-trip engineering techniques restrict the development artifact to avoid
+synchronization problems.
+Partial round-trip engineering and protected regions are introduced in \cite{czarnecki_multi-level_2006}.
+Such techniques aim to preserve code editions which cannot be propagated to models.
+This approach separates the code regions that are generated from models
+from regions which are allowed to be edited by developers.
+In contrast to our work,
+this form of round-trip engineering is unidirectional and does not support iterative development \cite{Jorges2013}.
+Furthermore we do not restrict editions on model and code.
+
+%TODO low-level
+%The authors in \cite{angyal_synchronizing_2008} propose a syntactic synchronization technique for domain-specific modeling languages (DSML) and code. 
+%The approach uses an Abstract Syntax Tree (AST) metal-model to model source. Changes in code detected by using an algorithm proposed  in \cite{Chawathe:1996:CDH:235968.233366} to compare the AST instance of the current code with the last synchronized one are merged to the instance of DSML. 
+%However, an AST is very low level and it is not clear to have mappings from DSML instances to AST instances. 
+%Furthermore, although there is an example for illustrating the technique, a systematic evaluation of the approach is not presented to show its scalability.
+
+\paragraph{Viewpoint synchronization}
+
+% Viewpoint
+Both models and code can be considered simply as different viewpoints
+of the same system. Viewpoints enable the partitioning of the model of a system into several representations. 
+Synchronization between viewpoints is crucial to maintain their consistency.
+
+In \cite{eramo_change_2008} the authors improve the modeling of relationships and constraints between
+elements in different viewpoints in order to better guarantee the consistency of viewpoints.
+In \cite{goedicke_viewpoint-oriented_2000} the authors argue that inconsistencies will exist
+in systems developed with different actors, using different viewpoints. They suggest that tools
+must be able to tolerate inconsistencies. A distributed graph transformation is proposed to deal with the problem of formalizing the integration of multiple viewpoints in software development.
+Their work focuses on requirements engineering.
+In contrast, our approach targets specifically both model and code.
+Code is not usually considered in viewpoint synchronization because code is deemed to be too fine-grained.
+Furthermore, our approach does not require explicit modeling
+of relationships between model and code elements.
+
+\paragraph{Model synchronization}
+
+Viewpoints synchronization is generalized by model synchronization for which there is
+an abundance of techniques presented in the literature. Model synchronization aims
+to maintain consistency between a source model and a target model. 
+
+Many model synchronization techniques require the explicit mapping of source model and target model.
+The authors in \cite{Paesschen2005} propose an injective mapping of elements in the source model to
+the target model. The mapping can be used for synchronization.
+Techniques and technologies, such as Triple Graph Grammar (TGG) \cite{giese_incremental_2006},
+and QVT-Relation \cite{Omg2008},
+allow synchronization between source and target elements that have non-injective mappings.
+The authors in \cite{Hermann2012} formalize TGG for synchronization of models that are concurrently edited.
+All of these techniques require a mapping model to connect the source and target models
+with typed traceability links, which need to be persisted in a model store \cite{Bergmann2011}.
+This means that editing one model requires the presence of the other.
+Our model-code synchronization approach does not require a mapping model and an artifact may be edited
+independently of the presence of the other corresponding artifact.
+
+Other techniques \cite{foster_combinators_2007}
+are based on bi-directional transformations, which comprise a forward transformation of
+source to target model, and a backward transformation of target to source model.
+Bi-directional transformations provides a novel mechanism for synchronization.
+Indeed, some works \cite{Matsuda2015} derive a backward transformation based on forward
+transformation.
+However, such works do not offer any means to synchronize models that are concurrently edited.
+
+A few approaches derive model synchronization from model transformation while allowing concurrent editions
+of both source and target models.
+In \cite{xiong_towards_2007} the authors propose to automatically derive
+model synchronization of a source and a target model related by an ATL \cite{eclipse_foundation_eclipse_2016}
+model transformation.
+The synchronization is based on differentiating source and target model states.
+But, reflectable addition of an element in the target model is not well handled according to \cite{xiong_towards_2007}.
+Our approach is generic and does not depend on a specific technology. Furthermore, in our implementation
+we propose to use modification events rather than state differences for incremental
+transformations, necessary for synchronization.
+
+~
+
+As a final note, we argue that our methodological pattern is generic. Therefore many synchronization
+techniques found in the literature can be integrated into our approach, such as, for example,
+the \texttt{Synchronize Model} or \texttt{Reverse Code} use-cases of
+the proposed generic IDE.
+Finally, our solution targets collaboration between software architects and programmers who wish to use
+diagram-based languages or textual languages. Therefore we propose to use a synchronization artifact
+in the preferred language of the developer, rather than directly synchronizing artifacts in different languages.

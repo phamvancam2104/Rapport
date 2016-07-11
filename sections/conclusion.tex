@@ -1,0 +1,49 @@
+\section{Conclusion}
+\label{sec:conclusion}
+
+Model-Driven Engineering is considered an efficient way to dealing with the complexity of systems today. 
+MDE relies on two mechanisms abstraction and automation. 
+The latter are realized by artifact synchronizations.  
+Despite many advantages of MDE, the adoption level of MDE into industries is still not high as expected. 
+In order to raise the adoption level, the core technologies of MDE need to be enhanced.   
+This report presents the scope of the thesis, whose focus is to improve the core technologies of MDE such as artifact transformation, synchronization and code generation. 
+
+The report starts with describing major topics covered and developed in the deployment of the thesis. 
+Different approaches around the technologies are proposed for wider integrating MDE into industrial practice to gain software quality and productivity. The proposed approaches are designed to support a continuous collaboration between software architects and programmers allowing each to use the working practices of choice
+%It can be used as a pattern
+%to solve the issue of model-code synchronization when artifacts co-evolve.
+%The proposition targets collaboration between software architects and programmers,
+%without imposing to either developers a diagram-based language or a textual language.
+
+Two approaches including a generic pattern for artifact synchronization and a complete generation solution for UML State Machine are chosen to be detailed in this report because of their importance. 
+Other works are also mentioned in the report. 
+The overview of some ongoing and future works is also described to provide readers a plan for the next steps of the thesis deployment.  
+
+\begin{comment}
+Several simulations were used to validate our synchronization approach with respect to both laws of round-trip engineering. 
+In addition, a simulation of scenarios in which both the model and the code were edited concurrently was performed, further demonstrating the viability of the approach, even in such a highly dynamic scenario.
+
+The approach was then applied to a real-world application: the Papyrus-RT runtime system. This system was
+originally developed in C++ with some non-object-oriented code.
+The experiment showed that the main difficulty of using our approach applied to such a system was
+the need to edit and refactor the program code in such way that it can be reverse engineered into a corresponding UML model without loss of information.
+Once the processes of our synchronization solution were bootstrapped in this way, dynamic collaboration
+between software architects and programmers was possible. We were then able to
+reap the important benefits of MDE; development was facilitated through increased automation and system maintainability and evolvability were improved.
+
+%Realization-wise, in the future, we would like to make our implementation even more generic.
+%Indeed, we had to modify tools like EMF Compare to suit the
+%implementation of our solution with other Eclipse technologies.
+Currently we are implementing our generic synchronization pattern for several other
+programming languages, like Java. Part of our future work is to federate
+implementations of the system, in heterogeneous programming languages,
+as one or several models based on a common core in UML.
+\end{comment}
+%The work presented in this report is supported by the European project SafeAdapt, grant agreement No. 608945, see \ti{http://www.SafeAdapt.eu}. The project deals with adaptive system with additional safety and real time constraints. The adaptation and safety aspects are stored in different artifacts in order to achieve a separation of concerns. These artifacts need to be synchronized. In this project in part motivated by the perceived gap between diagram-based languages and
+%textual languages, which impeded greater adoption of MDE among practitioners.
+
+%Therefore, as a future work item, we would like to assess to what extent our
+%solution helps in eliminating the unnecessary and dogmatic separation of models from code. 
+%We feel that this would be useful to both the MDE community and the more traditionally-oriented software communities.
+%As MDE is gradually integrated into industrial practices, correct-by-construction approaches, through MDE,
+%can be adopted to deliver higher quality software.

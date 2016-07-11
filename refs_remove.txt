@@ -1,0 +1,19 @@
+X (Remove ref) Remove OMG-standard UML 2 [50]
+X (Remove ref) Papyrus is a UML modeler that uses the Eclipse Modeling Framework (EMF) [60]
+X (Remove ref) The Viatra [4]
+X (Remove ref) EMF Compare [8]
+X (Remove some refs) Many works [6, 46, 47, 54, 55, 64] discuss the pros and cons of visual languages
+X (Only one) Some works [7, 9] also discuss what limits the adoption of visual languages.
+X (Remove some refs) Several commercial and open-source tools [1-3, 22, 33, 48, 53, 58, 59]
+X (Only one) Systematic reviews of some of these tools are available in [14, 27].
+X (Only one) Other languages such as C++ are only available in a few [2, 22, 58].
+X (Only one) Some tools [2, 58, 59] only allow one of the artifacts, model or code, to be edited at a certain time.
+X (Remove entirely) Fujava [39]
+X (Remove ref) Model and code can be both seen as dierent viewpoints [17]
+X (Remove entirely?) Model synchronization works are usually categorized by their model transformation which can be total, injective, bi-directional, or partial non-injective [29].
+X (Only one) Triple Graph Grammar (TGG) [25, 38]
+X (Only one) Other techniques [20, 61, 65]
+X (Remove ref) Bi-directional transformations provides a novel mechanism for synchronization [18].
+X (Only one) Indeed, some works [18, 44] derive a backward transformation based on forward transformation.
+X (Remove ref) by ATL [35]
+ 

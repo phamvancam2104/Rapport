@@ -1,0 +1,160 @@
+\documentclass[a4paper,11pt,final]{article}
+% Pour une impression recto verso, utilisez plutôt ce documentclass :
+%\documentclass[a4paper,11pt,twoside,final]{article}
+
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[pdftex]{graphicx}
+\usepackage{setspace}
+\usepackage{hyperref}
+\usepackage[french]{varioref}
+
+\newcommand{\reporttitle}{Exemple de rapport}     % Titre
+\newcommand{\reportauthor}{Bruno \textsc{Voisin}} % Auteur
+\newcommand{\reportsubject}{Stage de fin d'étude} % Sujet
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+\setlength{\parskip}{1ex} % Espace entre les paragraphes
+
+\hypersetup{
+    pdftitle={\reporttitle},%
+    pdfauthor={\reportauthor},%
+    pdfsubject={\reportsubject},%
+    pdfkeywords={rapport} {vos} {mots} {clés}
+}
+\usepackage{balance}
+
+%% to enable \thank command
+
+%% The usage of the following packages is recommended
+%% to insert graphics
+\usepackage{graphicx}
+% to typeset algorithms
+%\usepackage{algorithmic}
+\usepackage{algorithm}
+% to typeset code fragments
+\usepackage{listings}
+% to make an accent \k be available
+\usepackage[OT4,T1]{fontenc}
+% provides various features to facilitate writing math formulas and to improve the typographical quality of their output.
+\usepackage[cmex10]{amsmath}
+\interdisplaylinepenalty=2500
+% por urls typesetting and breaking
+\usepackage{url}
+% for vertical merging table cells
+\usepackage{amsthm}
+\usepackage{multirow}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+
+\usepackage{filecontents}
+
+\usepackage{booktabs}% http://ctan.org/pkg/booktabs
+\newcommand{\tabitem}{~~\llap{\textbullet}~~}
+
+\usepackage{color}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\definecolor{LightCyan}{rgb}{0.88,1,1}
+\definecolor{BluishGray}{RGB}{226,227,231}
+\definecolor{LightGray}{gray}{0.95}
+\definecolor{Gray}{gray}{0.85}
+\usepackage{algpseudocode,algorithmicx}
+\usepackage{comment}
+\newcommand*\DNA{\textsc{dna}}
+
+\newcommand*\Let[2]{\State #1 $\gets$ #2}
+\algrenewcommand\algorithmicrequire{\textbf{Input:}}
+\algrenewcommand\algorithmicensure{\textbf{Output:}}
+\algrenewcommand\algorithmicrequire{\textbf{Input:}}
+\algrenewcommand\algorithmicensure{\textbf{Output:}}
+
+% define environments for remarks and examples
+\newtheorem{remark}{Remark}[section]
+\newtheorem{example}[remark]{Example}
+\newcommand{\ti}{\textit}
+\newcommand{\tb}{\textbf}
+
+\setlength{\textfloatsep}{1\baselineskip plus 0.2\baselineskip minus 0.8\baselineskip}
+\lstset{
+	language=Ada,                % choose the language of the code
+	basicstyle=\tiny,       % the size of the fonts that are used for the code
+	%numbers=left,                   % where to put the line-numbers
+	%numberstyle=\footnotesize,      % the size of the fonts that are used for the line-numbers
+	%stepnumber=1,                   % the step between two line-numbers. If it is 1 each line will be numbered
+	%numbersep=5pt,                  % how far the line-numbers are from the code
+	backgroundcolor=\color{white},  % choose the background color. You must add \usepackage{color}
+	showspaces=false,               % show spaces adding particular underscores
+	showstringspaces=false,         % underline spaces within strings
+	showtabs=false,                 % show tabs within strings adding particular underscores
+	%frame=single,           % adds a frame around the code
+	tabsize=2,          % sets default tabsize to 2 spaces
+	captionpos=b,           % sets the caption-position to bottom
+	breaklines=true,        % sets automatic line breaking
+	breakatwhitespace=false,    % sets if automatic breaks should only happen at whitespace
+	escapeinside={\%*}{*)},          % if you want to add a comment within your code
+	numbers=right,
+	numbersep=-10pt,
+	numberstyle=\tiny,
+}
+
+
+%
+%
+\title{Rapport}
+%
+%
+
+
+% conference papers do not typically use \thanks and this command
+% is locked out in conference mode. If really needed, such as for
+% the acknowledgment of grants, issue a \IEEEoverridecommandlockouts
+% after \documentclass
+
+% for over three affiliations, or if they all won't fit within the width
+% of the page, use this alternative format:
+% 
+%\author{\IEEEauthorblockN{Michael Shell\IEEEauthorrefmark{1},
+%Homer Simpson\IEEEauthorrefmark{2},
+%James Kirk\IEEEauthorrefmark{3}, 
+%Montgomery Scott\IEEEauthorrefmark{3} and
+%Eldon Tyrell\IEEEauthorrefmark{4}}
+%\IEEEauthorblockA{\IEEEauthorrefmark{1}School of Electrical and Computer Engineering\\
+%Georgia Institute of Technology,
+%Atlanta, Georgia 30332--0250\\ Email: see http://www.michaelshell.org/contact.html}
+%\IEEEauthorblockA{\IEEEauthorrefmark{2}Twentieth Century Fox, Springfield, USA\\
+%Email: homer@thesimpsons.com}
+%\IEEEauthorblockA{\IEEEauthorrefmark{3}Starfleet Academy, San Francisco, California 96678-2391\\
+%Telephone: (800) 555--1212, Fax: (888) 555--1212}
+%\IEEEauthorblockA{\IEEEauthorrefmark{4}Tyrell Inc., 123 Replicant Street, Los Angeles, California 90210--4321}}
+
+
+
+
+
+\begin{document}
+  \maketitle              % typeset the title of the contribution
+  \cleardoublepage % Dans le cas du recto verso, ajoute une page blanche si besoin
+  \tableofcontents % Table des matières
+  \sloppy          % Justification moins stricte : des mots ne dépasseront pas des paragraphes
+  \cleardoublepage
+  \include{remerciements}
+  \input{sections/abstract}
+  \cleardoublepage
+  \input{sections/introduction}
+  \input{sections/processes}
+  %\input{sections/formalize}
+  %\input{sections/RTESM}
+   \input{sections/codegentex}
+  \input{sections/ongoing}
+  %\input{sections/approach}
+  %\include{partie1}
+  \cleardoublepage
+  %\include{partie2}
+  \cleardoublepage
+  %\include{concl}
+  \cleardoublepage
+  \bibliographystyle{abbrv}
+  \bibliography{refs}
+\end{document}
+

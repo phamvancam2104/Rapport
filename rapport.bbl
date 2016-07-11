@@ -1,0 +1,69 @@
+\begin{thebibliography}{10}
+
+\bibitem{brown_position_2015}
+N.~C.~C. Brown, M.~Kolling, and A.~Altadmri.
+\newblock Position paper: {Lack} of keyboard support cripples block-based
+  programming.
+\newblock In {\em Proceedings of the 2015 {Blocks} and {Beyond} {Workshop}},
+  Atlanta, GA, USA, 2015.
+
+\bibitem{chikofsky_reverse_1990}
+E.~J. Chikofsky, J.~H. Cross, and {others}.
+\newblock Reverse engineering and design recovery: {A} taxonomy.
+\newblock {\em Software, IEEE}, 7(1):13--17, 1990.
+
+\bibitem{Giese2006}
+H.~Giese and R.~Wagner.
+\newblock {Incremental Model Synchronization with Triple Graph Grammars}.
+\newblock In {\em Proceedings of the 9th international conference on Model
+  Driven Engineering Languages and Systems}, Genova, Italy, 2006.
+
+\bibitem{Hettel2008}
+T.~Hettel, M.~Lawley, and K.~Raymond.
+\newblock {Model synchronisation: Definitions for round-trip engineering}.
+\newblock In {\em Lecture Notes in Computer Science (including subseries
+  Lecture Notes in Artificial Intelligence and Lecture Notes in
+  Bioinformatics)}, volume 5063 LNCS, pages 31--45, 2008.
+
+\bibitem{hutchinson_model-driven_2014}
+J.~Hutchinson, J.~Whittle, and M.~Rouncefield.
+\newblock Model-driven engineering practices in industry: {Social},
+  organizational and managerial factors that lead to success or failure.
+\newblock {\em Science of Computer Programming}, 89:144--161, Sept. 2014.
+
+\bibitem{Mussbacher2014}
+G.~Mussbacher, D.~Amyot, R.~Breu, J.-m. Bruel, B.~H.~C. Cheng, P.~Collet,
+  B.~Combemale, R.~B. France, R.~Heldal, J.~Hill, J.~Kienzle, and
+  M.~Sch{\"{o}}ttle.
+\newblock {The Relevance of Model-Driven Engineering Thirty Years from Now}.
+\newblock {\em ACM/IEEE 17th International Conference on Model Driven
+  Engineering Languages and Systems (MODELS)}, pages 183--200, 2014.
+
+\bibitem{omg_software_2008}
+OMG.
+\newblock Software \& {Systems} {Process} {Engineering} {Metamodel}
+  specification ({SPEM}) {Version} 2.0.
+\newblock http://www.omg.org/spec/SPEM/2.0/PDF, 2008.
+
+\bibitem{OMG2015}
+OMG.
+\newblock {Precise Semantics Of UML Composite Structures}.
+\newblock (October), 2015.
+
+\bibitem{selic_what_2012}
+B.~Selic.
+\newblock What will it take? {A} view on adoption of model-based methods in
+  practice.
+\newblock {\em Software \& Systems Modeling}, 11(4):513--526, Oct. 2012.
+
+\bibitem{Sendall}
+S.~Sendall and J.~Kuster.
+\newblock {Taming Model Round-Trip Engineering}.
+
+\bibitem{sendall_taming_2004}
+S.~Sendall and J.~K\"{u}ster.
+\newblock Taming model round-trip engineering.
+\newblock In {\em Proceedings of {Workshop} on {Best} {Practices} for
+  {Model}-{Driven} {Software} {Development}}, Vancouver, Canada, 2004.
+
+\end{thebibliography}

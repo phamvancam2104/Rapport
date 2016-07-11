@@ -1,0 +1,248 @@
+\begin{thebibliography}{10}
+
+\bibitem{Bergmann2011}
+G.~Bergmann, I.~R{\'{a}}th, G.~Varr{\'{o}}, and D.~Varr{\'{o}}.
+\newblock {\em {Change-driven model transformations}}, volume~11.
+\newblock mar 2011.
+
+\bibitem{brown_position_2015}
+N.~C.~C. Brown, M.~Kolling, and A.~Altadmri.
+\newblock Position paper: {Lack} of keyboard support cripples block-based
+  programming.
+\newblock In {\em Proceedings of the 2015 {Blocks} and {Beyond} {Workshop}},
+  Atlanta, GA, USA, 2015.
+
+\bibitem{cea_papyrus-rt_2016}
+CEA.
+\newblock Papyrus-{RT} {Website}.
+\newblock \url{https://www.eclipse.org/papyrus-rt/}, 2016.
+
+\bibitem{chikofsky_reverse_1990}
+E.~J. Chikofsky, J.~H. Cross, and {others}.
+\newblock Reverse engineering and design recovery: {A} taxonomy.
+\newblock {\em Software, IEEE}, 7(1):13--17, 1990.
+
+\bibitem{conversy_unifying_2014}
+S.~Conversy.
+\newblock Unifying {Textual} and {Visual}: {A} {Theoretical} {Account} of the
+  {Visual} {Perception} of {Programming} {Languages}.
+\newblock In {\em Proceedings of the 2014 {ACM} {Internation} {Symposium} on
+  {New} {Ideas}, {New} {Paradigs}, and {Reflections} on {Programming} \&
+  {Software}}, Portland, OR, USA, 2014.
+
+\bibitem{Cutting2015}
+D.~Cutting and J.~Noppen.
+\newblock {An Extensible Benchmark and Tooling for Comparing Reverse
+  Engineering Approaches}.
+\newblock {\em International Journal on Advances in Software}, 8(1):115--124,
+  2015.
+
+\bibitem{czarnecki_multi-level_2006}
+K.~Czarnecki, M.~Antkiewicz, and C.~H.~P. Kim.
+\newblock Multi-level customization in application engineering.
+\newblock {\em Communications of the ACM}, 49(12):60, Dec. 2006.
+
+\bibitem{eclipse_foundation_eclipse_2016}
+{Eclipse Foundation}.
+\newblock Eclipse {Projects}.
+\newblock https://www.eclipse.org/projects/.
+
+\bibitem{umlgen}
+{Eclipse UML Generators}.
+\newblock {Eclipse UML Generators Homepage}.
+\newblock \url{https://eclipse.org/acceleo/}, 2015.
+
+\bibitem{eramo_change_2008}
+R.~Eramo, A.~Pierantonio, J.~Romero, and A.~Vallecillo.
+\newblock Change {Management} in {Multi}-{Viewpoint} {System} {Using} {ASP}.
+\newblock In {\em Proceedings of the 12th {Entreprise} {Distributed} object
+  {Computing} {Conference} {Workshops}}, Munich, Germany, Sep, 2008.
+
+\bibitem{erwig_heterogeneous_1995}
+M.~Erwig and B.~Meyer.
+\newblock Heterogeneous visual languages-integrating visual and textual
+  programming.
+\newblock In {\em Proceedings of the 11th {IEEE} {International} {Symposium} on
+  {Visual} {Languages}}, 1995.
+
+\bibitem{Foster:2007:CBT:1232420.1232424}
+J.~N. Foster, M.~B. Greenwald, J.~T. Moore, B.~C. Pierce, and A.~Schmitt.
+\newblock Combinators for bidirectional tree transformations: A linguistic
+  approach to the view-update problem.
+\newblock {\em ACM Trans. Program. Lang. Syst.}, 29(3), May 2007.
+
+\bibitem{foster_combinators_2007}
+J.~N. Foster, M.~B. Greenwald, J.~T. Moore, B.~C. Pierce, and A.~Schmitt.
+\newblock Combinators for {Bidirectional} {Tree} {Transformations}: {A}
+  {Linguistic} {Approach} to the {View}-update {Problem}.
+\newblock {\em ACM Trans. Program. Lang. Syst.}, 29(3), May 2007.
+
+\bibitem{gerard_once_2015}
+S.~G\'erard.
+\newblock Once upon a {Time}, {There} {Was} {Papyrus}.
+\newblock In {\em Proceedings of 3rd {International} {Conference} on
+  {Model}-{Driven} {Engineering} and {Software} {Development}}, Montreal,
+  Canada, 2015.
+
+\bibitem{Giese2006}
+H.~Giese and R.~Wagner.
+\newblock {Incremental Model Synchronization with Triple Graph Grammars}.
+\newblock In {\em Proceedings of the 9th international conference on Model
+  Driven Engineering Languages and Systems}, Genova, Italy, 2006.
+
+\bibitem{giese_incremental_2006}
+H.~Giese and R.~Wagner.
+\newblock Incremental model synchronization with triple graph grammars.
+\newblock In {\em Model {Driven} {Engineering} {Languages} and {Systems}},
+  pages 543--557. Springer, 2006.
+
+\bibitem{goedicke_viewpoint-oriented_2000}
+M.~Goedicke, B.~Enders, T.~Meyer, and G.~Taentzer.
+\newblock {ViewPoint}-{Oriented} {Software} {Development}: {Tool} {Support} for
+  {Integrating} {Multiple} {Perspectives} by {Distributed} {Graph}
+  {Transformation}.
+\newblock In {\em Tools and {Algorithms} for the {Construction} and {Analysis}
+  of {Systems}}, volume 1785, pages 43--47. Springer Berlin Heidelberg, Berlin,
+  Heidelberg, Germany, Jun, 2000.
+
+\bibitem{Hermann2012}
+F.~Hermann, H.~Ehrig, C.~Ermel, and F.~Orejas.
+\newblock {Concurrent model synchronization with conflict resolution based on
+  triple graph grammars}.
+\newblock In {\em Lecture Notes in Computer Science (including subseries
+  Lecture Notes in Artificial Intelligence and Lecture Notes in
+  Bioinformatics)}, volume 7212 LNCS, pages 178--193, 2012.
+
+\bibitem{hutchinson_model-driven_2011}
+J.~Hutchinson, M.~Rouncefield, and J.~Whittle.
+\newblock Model-driven engineering practices in industry.
+\newblock In {\em Proceedings of the 33rd {International} {Conference} on
+  {Software} {Engineering}}, Honolulu, HI, USA, 2011.
+
+\bibitem{hutchinson_model-driven_2014}
+J.~Hutchinson, J.~Whittle, and M.~Rouncefield.
+\newblock Model-driven engineering practices in industry: {Social},
+  organizational and managerial factors that lead to success or failure.
+\newblock {\em Science of Computer Programming}, 89:144--161, Sept. 2014.
+
+\bibitem{ibm_doors_2016}
+IBM.
+\newblock Rational {DOORS}.
+\newblock http://www-03.ibm.com/software/products/en/ratidoor, 2016.
+
+\bibitem{ibm_rational_2016}
+IBM.
+\newblock Rational {Rhapsody} {Website}.
+\newblock http://www-03.ibm.com/software/products/en/ratirhapfami, 2016.
+
+\bibitem{Jorges2013}
+S.~J{\"{o}}rges.
+\newblock {Construction and evolution of code generators: A model-driven and
+  service-oriented approach}.
+\newblock {\em Lecture Notes in Computer Science (including subseries Lecture
+  Notes in Artificial Intelligence and Lecture Notes in Bioinformatics)},
+  7747:1--265, 2013.
+
+\bibitem{kazakova_infographic:_2016}
+A.~Kazakova.
+\newblock Infographic: {C}/{C}++ facts we learned before going ahead with
+  {CLion}.
+\newblock
+  \url{http://blog.jetbrains.com/clion/2015/07/infographics-cpp-facts-before-clion/},
+  2016.
+
+\bibitem{kusel_survey_2013}
+A.~Kusel, J.~Etzlstorfer, E.~Kapsammer, P.~Langer, W.~Retschitzegger,
+  J.~Schoenboeck, W.~Schwinger, and M.~Wimmer.
+\newblock A {Survey} on {Incremental} {Model} {Transformation} {Approaches}.
+\newblock In {\em Proceedings of the 7th {Models} and {Evolution} {Workshop}},
+  Miami, FL, USA, 2013.
+
+\bibitem{malavolta_what_2013}
+I.~Malavolta, P.~Lago, H.~Muccini, P.~Pelliccione, and A.~Tang.
+\newblock What {Industry} {Needs} from {Architectural} {Languages}: {A}
+  {Survey}.
+\newblock {\em IEEE Transactions on Software Engineering}, 39(6):869--891, Jun,
+  2013.
+
+\bibitem{Matsuda2015}
+K.~Matsuda and M.~Wang.
+\newblock {Applicative bidirectional programming with lenses}.
+\newblock {\em Proceedings of the 20th ACM SIGPLAN}, pages 38--41, 2015.
+
+\bibitem{models_conf}
+MODELS.
+\newblock Models conference.
+\newblock \url{http://www.modelsconference.org}, 2016.
+
+\bibitem{Magicdraw}
+{No Magic, Inc.}
+\newblock {Magic Draw}.
+\newblock \url{https://www.nomagic.com/products/magicdraw.html}, 2016.
+
+\bibitem{omg_software_2008}
+OMG.
+\newblock Software \& {Systems} {Process} {Engineering} {Metamodel}
+  specification ({SPEM}) {Version} 2.0.
+\newblock http://www.omg.org/spec/SPEM/2.0/PDF, 2008.
+
+\bibitem{Paesschen2005}
+E.~Paesschen, W.~Meuter, and M.~D'Hondt.
+\newblock {\em Model Driven Engineering Languages and Systems: 8th
+  International Conference, MoDELS 2005, Montego Bay, Jamaica, October 2-7,
+  2005. Proceedings}, chapter SelfSync: A Dynamic Round-Trip Engineering
+  Environment, pages 633--647.
+\newblock Springer Berlin Heidelberg, Berlin, Heidelberg, 2005.
+
+\bibitem{petre_why_1995}
+M.~Petre.
+\newblock Why looking isn't always seeing: readership skills and graphical
+  programming.
+\newblock {\em Communications of the ACM}, 38(6):33--44, Jun, 1995.
+
+\bibitem{Omg2008}
+{QVT OMG}.
+\newblock {Meta Object Facility ( MOF ) 2.0 Query / View / Transformation
+  Specification}.
+\newblock {\em Transformation}, pages 1--230, 2008.
+
+\bibitem{schanzer_blocks_2015}
+E.~Schanzer, K.~Shriram, and F.~Kathi.
+\newblock Blocks {Versus} {Text}: {Ongoing} {Lessons} from {Bootstrap}.
+\newblock In {\em Proceedings of the 2015 {Blocks} and {Beyond} {Workshop}},
+  Atlanta, GA, USA, 2015.
+
+\bibitem{selic_what_2012}
+B.~Selic.
+\newblock What will it take? {A} view on adoption of model-based methods in
+  practice.
+\newblock {\em Software \& Systems Modeling}, 11(4):513--526, Oct. 2012.
+
+\bibitem{sendall_taming_2004}
+S.~Sendall and J.~K\"{u}ster.
+\newblock Taming model round-trip engineering.
+\newblock In {\em Proceedings of {Workshop} on {Best} {Practices} for
+  {Model}-{Driven} {Software} {Development}}, Vancouver, Canada, 2004.
+
+\bibitem{EA}
+{SparxSystem}.
+\newblock {Enterprise Architect}.
+\newblock \url{http://www.sparxsystems.com/products/ea/}, 2016.
+
+\bibitem{visure_visure_2016}
+Visure.
+\newblock Visure {Requirements}.
+\newblock http://www.visuresolutions.com/, 2016.
+
+\bibitem{von_mayrhauser_program_1995}
+A.~Von~Mayrhauser and A.~Vans.
+\newblock Program comprehension during software maintenance and evolution.
+\newblock {\em Computer}, 28(8):44--55, Aug. 1995.
+
+\bibitem{xiong_towards_2007}
+Y.~Xiong, D.~Liu, Z.~Hu, H.~Zhao, M.~Takeichi, and H.~Mei.
+\newblock Towards automatic model synchronization from model transformations.
+\newblock In {\em Proceedings of the 22nd {IEEE}/{ACM} {Internation}
+  {Conference} on {Automated} {Software} {Engineering}}, 2007.
+
+\end{thebibliography}

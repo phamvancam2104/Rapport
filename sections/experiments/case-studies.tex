@@ -1,0 +1,103 @@
+\subsection{Papyrus-RT runtime case-study}
+\label{sec:case-study}
+
+% Section introduction and goal of experiment
+In Section \ref{sec:simulation} the approach was tested for UML and C++ synchronization, using simulations.
+In this section we describe the application of the full synchronization approach to a case-study. The intent here was to evaluate:
+
+\begin{itemize}
+	\item The usability of the proposed synchronization approach
+	\item The scalability of the tooling to a real system
+\end{itemize}
+
+% Case-study introduction
+The case-study is related to the development of the runtime underlying Papyrus-RT \cite{cea_papyrus-rt_2016}.
+This latter is an open-source custom modeling tool, based on Papyrus,
+that supports UML extensions for the design of a category of event-driven real-time systems (UML-RT).
+%UML-RT \cite{kuster_consistent_2001} offers
+%a set of extensions to UML for the design of real-time systems. UML-RT is
+%developed by Zeligsoft within the Papyrus-RT \cite{cea_papyrus-rt_2016} modeler dedicated to the UML-RT modeling language.
+Papyrus-RT features full automated code generation for UML
+models. 
+The generated code executes within a corresponding runtime environment,
+which provides C++ realizations of the high-level concepts defined in UML-RT.
+
+% Motivation behind case-study
+At the beginning of the project,
+the resource available to develop the aforementioned runtime
+was an experienced C++ programmer.
+For the obvious pragmatic reasons of project management,
+it was decided to implement the runtime in C++ without
+the benefits of models.
+However, later it was concluded that even if the result was satisfactory,
+it would be beneficial to exploit the advantages that MDE provides.
+Thus, an MDE approach would improve
+both the maintainability and the evolvability of the runtime.
+Moreover, as development progressed, the project was expanded to include
+new developers, who are proponents
+of MDE and are eager to work with models.
+
+As a result, this project represented an ideal case study to assess the practicality of the proposed approach. In particular, we were interested in determining its usability and scalability
+
+% C++ implementation and C/C++ specificities of case-study
+The runtime was originally implemented as an open-source plain C++11 project.
+Most of its architecture is object-oriented.
+The runtime has 65 classes and 14,945 lines of code.
+Other than containing typical entities found in object-oriented architectures,
+the runtime uses C/C++ features such
+as type definitions, templates, pointers, references, function pointers, and variadic functions to name a few.
+These features are supported by the
+the reverse and code generation tools in Papyrus, coupled with the C++ UML profile.
+
+% What we did in the experiment
+In order to use our model-code synchronization approach, the original Papyrus-RT runtime had first to be
+reversed to a UML model. This step was crucial because the original runtime
+contained some elements that were not object-oriented. Consequently,
+some modifications and refactorings were made
+to the original runtime to make it fully object-oriented.
+This enabled it to be modeled entirely in a language like UML.
+Table \ref{tab:runtime_diff} shows the two main differences between
+the original runtime, and the revised object-oriented runtime.
+
+\begin{table}
+\centering
+\caption{Differences in Papyrus-RT runtime versions}
+\label{tab:runtime_diff}
+    \begin{tabular}{|p{9pc}|p{9pc}|}
+    \hline
+    \rowcolor{Gray}
+    Original & Object-oriented \\ \hline
+    Directives to control compilation of OS-dependent code & Abstract OS-independent classes inherited by OS-dependent classes with implementation \\ \hline
+    Variables, functions and type definitions outside of class & Refactored as entities inside a class. Attributes and functions are static with visibility defined according to scope of original variables and functions. \\ \hline
+    \end{tabular}
+\end{table}
+
+% Results
+The reverse in batch mode of the object-oriented runtime
+takes about 12 seconds. All 65 classes were reversed,
+with all of their attributes and methods.
+Code generation in batch mode of the entire reversed UML model takes about 5 seconds
+and produces 22,053 lines of code.
+The difference in the number of lines of code is due to automatically
+generated documentation comments.
+The generated runtime compiles and the updated existing unit tests
+pass when applied on the runtime compiled from generated code.
+
+Once the runtime has been reversed,
+our model-code synchronization processes could be used.
+We noticed that using the proposed approach introduced MDE style development for the Papyrus-RT runtime.
+This brought about several advantages as several manual tasks were automated:
+
+\begin{itemize}
+	\item Automatic handling of relationships between model elements, i.e. association, dependency, inheritance
+	\item Automatic generation of includes and forward declarations in the code that avoids cyclic dependencies
+	\item Graphical representation of architecture in automatically updated UML diagrams (feature of Papyrus)
+\end{itemize}
+
+In applying the proposed approach to achieve a collaborative development of the runtime system,
+we found that the only real difficulty faced was initializing the synchronization processes.
+This required the reverse engineering of the original runtime, with some non-object-oriented code, into an
+object-oriented UML model. The reverse was successful following some modifications and refactorings.
+Once the full model-code synchronization process was in place,
+we were able to use it and develop concurrently both the UML model and its generated C++ code.
+%The development of the runtime then benefited from automation through MDE.

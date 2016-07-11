@@ -1,0 +1,156 @@
+\section{Preliminary definition}
+\label{sec:use-case}
+
+In this section we define the actors who will use our model-code synchronization approach to collaborate during development.
+%Then we define the main capabilities, as use-cases, expected from a generic IDE used by these actors.
+Some basic concepts related to the actors and use-cases are also defined in this section.
+
+\subsection{Collaborating actors and development artifacts}
+
+%In this paper we propose a methodological model-code synchronization pattern for collaboration between software
+%architects and programmers.
+For the sake of generality, we postulate that the architect and programmer are actors with starkly opposite development practices.
+This allows the approach to be used even in cases where model
+and code can both be used for the full implementation of a system,
+rather than just architectural design for the former,
+and code implementation for the latter.
+First, we introduce the concepts of \textit{development artifact} and \textit{baseline artifact}.
+
+\begin{definition}[Development artifact]
+A development artifact is a artifact, as defined in \cite{omg_software_2008},
+that can be used for the full implementation of the system.
+\end{definition}
+
+%For example a system can be entirely implemented as code.
+%Implementation code is a development artifact, so may model.
+%It is then not only documentation of specification
+%but part of the implementation.
+%For example a model can be used for implementation by generating code from the model, and compiling the code without the need to edit or complete the code.
+In our work, we assume that model and code are both development artifacts.
+A development artifact may be the baseline artifact, defined in this paper as follows:
+
+\begin{definition}[Baseline artifact]
+A baseline artifact is one which may be edited manually.
+All other artifacts are produced from the baseline artifact
+through some process, and only through a process. Manual edition
+of artifacts other than the baseline artifact is forbidden.
+\end{definition}
+
+Two primary actors, called \textit{model-driven developer}
+and \textit{code-driven developer}, are introduced.
+%The main difference between them
+%is what they consider as the baseline artifact.
+
+\begin{definition}[Model-driven developer]
+A model-driven developer is an actor in a software development process
+for whom the baseline artifact is the model.
+\end{definition}
+
+%In other words, for the model-driven developer only the model should be edited manually. 
+The code must always be produced from the model automatically
+by some process that guarantees that the code is consistent with the model.
+A software architect is a kind of the model-driven developer
+who edits the model to specify the architecture of the system.
+%An architect presumes that the reference for the architecture
+%of the system should be specified as a model.
+
+\begin{definition}[Code-driven developer]
+Code-driven developer is an actor in a software development process
+for whom the code is the baseline artifact.
+\end{definition}
+
+A programmer is a specialization of the code-driven developer.
+Indeed, programmers may modify the code, such as editing method bodies.
+%The code is then the main reference for the implementation of methods.
+
+\begin{comment}
+\subsection{Main use-cases of IDE for collaboration between developers}
+\label{sec:use-cases_ide}
+
+In this section we propose a generic IDE with the main
+use-cases that represent functionalities
+required by our model-code synchronization approach.
+%Figure \ref{fig:use-case} shows a UML use-case diagram of the IDE
+%and associations to the actors.
+
+%\begin{comment}
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{figures/use-case}
+\caption{Use-cases of IDE for model/code edition and synchronization}
+\label{fig:use-case}
+\end{figure}
+%\end{comment}
+
+%\begin{comment}
+There are some use-cases for manual edition of artifacts. The \texttt{Edit Artifact} use-case
+implies that the IDE must have some tool to let the developer manually edit an artifact.
+The \texttt{Edit Model} and \texttt{Edit Code} use-cases are specializations of the \texttt{Edit Artifact}
+use-case where the artifact is the model or code.
+
+There are also some use-cases related to the synchronization of artifacts. The \texttt{Synchronize Artifact} use-case
+is the synchronization of two artifacts by: (1) comparing them, (2) updating each artifact with editions made
+in the related artifact, and (3) reconciling conflicts when appropriate. The \texttt{Synchronize Model} and \texttt{Synchronize Code}
+use-cases are specializations where, respectively, the model or the code are the artifacts being synchronized.
+
+The \texttt{Generate Code} use-case is related to forward engineering.
+It is the production of code in a
+programming language from a model.
+The developer can either use \texttt{Generate Code (Batch)} or \texttt{Generate Code (Incremental)}.
+%\end{comment}
+
+\begin{definition}[Batch code generation \cite{Giese2006}]
+Batch code generation is a process of generating code
+from a model, from scratch.
+Any existing code is overwritten by the newly generated code.
+\end{definition}
+
+Incremental code generation is a specialization of incremental model transformation, which
+is defined in \cite{Giese2006} as model transformation that
+does not generate the whole target model from scratch but only updates the target model by
+propagating editions made in the source model.
+
+%\texttt{Incremental code generation (ICG)} \ti{$gen_{inc}$ is a process of taking as input a changed model m and an existing executable code to make the code synchronized with the changed model: $gen_{inc}(m, c) = c'$. Non-conflicted changes at the code side are kept intact the synchronization. ICG is also defined as a process of taking model changes ch and an existing code c: $gen_{inc}(ch, c) = c'$}.
+
+%Derived from the definition of incremental model transformation, 
+Incremental code generation
+is defined in this paper as follows:
+
+\begin{definition}[Incremental code generation]
+In-cremental code generation is the process
+of taking as input an edited model, and existing code, and then updating the code by propagating
+editions in the model to the code.
+\end{definition}
+
+%\begin{comment}
+Finally, the \texttt{Reverse Code} use-case is related to reverse engineering.
+\texttt{Reverse Code} is the production of a model, in a modeling language, from code, written in a programming language.
+The developer can either use \texttt{Reverse Code (Batch)} or \texttt{Reverse Code (Incremental)}, which are defined in this paper as follows:
+%\end{comment}
+
+\begin{definition}[Batch reverse engineering]
+Batch reverse engineering is a process of producing a model from code, from scratch.
+The existing model is overwritten by the newly produced model.
+\end{definition}
+
+\begin{definition}[Incremental reverse engineering]
+Incremental reverse engineering is the process of taking as
+input a edited code, and an existing model, and then updating the model by propagating
+editions in the code to the model.
+\end{definition}
+
+%For readability, in this paper we will sometimes designate batch and incremental as modes
+%of code generation/reverse; e.g. we say that we generate code in batch mode from a model.
+
+%The use-cases are generic. They do not depend
+%on any particular approach or tool. Therefore the software developers
+%can choose the approach or tool that suits better his/her
+%development preferences best.
+
+In the next section, the use-cases of the IDE are integrated into
+some processes that cover model-code synchronization in several scenarios.
+%The scenarios correspond to behaviors performed by both kinds of actors,
+%i.e. model-driven developers and code-driven developers.
+\end{comment}
+
+\input{sections/processes}

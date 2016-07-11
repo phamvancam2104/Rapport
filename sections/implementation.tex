@@ -1,0 +1,53 @@
+\section{An Implementation: synchronizing UML models and C++ code}
+\label{sec:implementation}
+
+The proposed model-code synchronization approach can be automated.
+We examine an Eclipse-based implementation of the IDE proposed in
+Section \ref{sec:use-cases_ide}. The implementation is used in the synchronization processes
+proposed in Section \ref{sec:processes}.
+Our implementation targets synchronization of Object Management Group (OMG) standard UML 2 and C++11 code.
+
+The use-cases of the IDE are implemented with some Eclipse technologies. More information
+on the technologies is available on the Eclipse Projects website \cite{eclipse_foundation_eclipse_2016}.
+
+\textbf{Eclipse CDT} is an IDE for C++ development. It is used in the \texttt{Edit Code} use-case.
+Eclipse \textbf{Papyrus} is used for the \texttt{Edit Model} use-case.
+Papyrus is an open-source UML modeler that uses the Eclipse Modeling Framework (EMF)
+implementation of the OMG-standard UML 2.
+Papyrus supports UML profiles for domain-specific modeling, and we use the UML profile of Papyrus
+dedicated to C++ to facilitate and accelerate modeling of some C++ features.
+%Furthermore, in standard UML there are elements like OpaqueBehavior which
+%allow to express programming language specifics in the model.
+
+We developed plugins for Papyrus to \texttt{Generate Code} from UML to C++ and to \texttt{Reverse Code}.
+The batch modes of these use-cases do not need additional technologies to implement.
+For use-cases \texttt{Generate Code (Incremental)} and \texttt{Reverse Code (Incremental)}, we choose to
+listen to modification events in the model and code respectively. Listening to modification events
+is one possible approach in incremental model transformation \cite{kusel_survey_2013}.
+The \textbf{Viatra}
+API is used to listen to such events in the model. The Eclipse CDT API is used
+to listen to modification events in the code. These list of events are used to
+either generate code or reverse code incrementally.
+
+\textbf{EMF Compare} is used for the \texttt{Synchronize Model} use-case when
+models are implemented with EMF.
+We adapted EMF Compare in order to synchronize UML models for
+our specific work.
+Eclipse CDT is used for the \texttt{Synchronize Code} use-case with its built-in C++ features.
+
+
+
+%Figure \ref{fig:strategies_impl} shows how technologies are combined
+%for UML-C++ synchronization, within a same Eclipse IDE. The synchronization strategies,
+%in the scenario where model and code are concurrently edition, is taken as an example to
+%show how the technologies are involved in the synchronization processes.
+%
+%\begin{figure}
+%\centering
+%\includegraphics[width=\columnwidth]{figures/strategies_impl}
+%\caption{Implementation of synchronization strategies}
+%\label{fig:strategies_impl}
+%\end{figure}
+
+The next section describes some experiments performed using the above implementation
+of our synchronization solution.

@@ -1,0 +1,67 @@
+\section{Other work}
+\label{sec:other}
+This section summaries other works not detailed in this report. The first one is an rule execution scheduling for rule-based incremental transformations, which are directly related to the thesis. This work is published in \tb{MODELSWARD} 2016\footnote{MODELSWARD 2016, http://www.modelsward.org/?y=2016}. The second one is a round-trip engineering approach for UML State Machine and object-oriented code. A paper based on this work is submitted to \tb{SEW}\footnote{IEEE SEW 2016, https://www.fedcsis.org/2016/sew} 2016.
+
+\subsection{A rule execution scheduling-based incremental model transformation}
+%//refer to [??]
+\label{subsec:scheduling}
+%Model driven engineering allows many stakeholders to contribute their expertise to the system description. This practice enables agility but implies consistency maintenance issues between different system models. 
+Incremental model transformations (IMT) are used to synchronize different artifacts contributed by the stakeholders. IMTs detect changes on the source model and execute change rules to propagate updates to the target model. However, the execution of change rules is not straightforward. A rule is only correctly executed if its precondition is satisfied at execution time. The precondition checks the availability of certain source and target elements involved in the rule. If a rule is executed when the precondition is false, either the execution is blocked or stopped. Therefore, the produced target model becomes incorrect. This study presents two approaches to the scheduling of change rule execution in incremental model transformations. These approaches are also applied to the case of model and code synchronization and implemented in a tool named IncRoundtrip that transforms and generates code for distributed systems. We also compare the runtime execution performance of different incremental approaches with batch transformation and evaluate their correctness.
+
+\subsection{From UML State Machine to code and back again}
+%//refer tp [??]
+\label{subsec:usm2code}
+% TODO This needs to be updated according to the intro!!!
+
+%The so-called model-driven engineering approach relies on two paradigms, abstraction and automation, recognized as very efficient for dealing with complexity of today system. 
+%Abstraction is the ability to provide simplified and focused view of a system and requires adequate modeling language. 
+%For this concern, it is clear that the Unified Modeling Language (UML) is nowadays the most used, educated, documented and tooled modeling language. 
+%Even, if a graphical language such as the UML is not the silver bullet for all software related concerns, it provides hence better support than text-based solutions for some concerns such as architecture and logical behavior of application development. 
+%UML state machines and their visual representations are much more suitable to describe logical behaviors of system entities than equivalent text based description such as IF-THEN-ELSE or SWITH-CASE constructions. 
+Although many industrial tools and research prototypes can generate executable code from such a graphical language, generated code could be manually modified by programmers. 
+After code modifications, round-trip engineering is needed to make the model and code consistent, which is a critical aspect to meet quality and performance constraint required for software systems. Unfortunately, current UML tools only support structural concepts for round-trip engineering such as those available from class diagrams. 
+
+This study addresses the round-trip engineering of UML state-machine and its related generated code as sketched in Fig. \ref{fig:smapproaches} (b). We propose an approach consisting of a forward process which generates code by using transformation patterns, and a backward process which is based on code pattern detection to update the original state machine model from the modified code.  
+
+This round-trip engineering only works for a limited sub-set of UML State Machine features. Specifically, only hierarchical state machines without pseudo states such as fork, join, junction, histories, choice are supported. 
+Furthermore, to achieve the reverse direction of the RTE, the code generation of this approach uses a reversible mapping, which is an extension of the state pattern \cite{Shalyto2006,Douglass1999}. Although the maintainability and collaboration (because of the RTE) are gained, compared to existing approaches such as switch/if \cite{Booch1998}, this pattern adds a slight memory overhead (around 13\%).   
+
+
+%Unified Modeling Language (UML) State machine is widely used 
+
+%Model-driven engineering (MDE) is a development methodology aiming to increase software productivity and quality by automatically generating code from higher level abstraction models. 
+%A recent survey has revealed that industries are gaining the adoption of code generation into software development life-cycle. 
+%Although many tools and research prototypes can generate executable code from models (e.g. Unified Modeling Language), developers, after code generation, tend to abandon models and code generators in software evolution. The reason behind is that generated code could be manually modified by developers and code modifications are not easily propagated back to models. Round-trip engineering (RTRIP) supported by many tools is needed to make the model and code consistent but most of the tools are only applicable to static diagrams such as classes. In this paper, we tackle a classical problem : from UML State Machine diagrams to code and back. We propose a RTRIP approach consisting of a forward process, which generates code, and a backward process, which updates the original state machine from the modified generated code. From the proposed approach, we implemented a prototype and conducted several experiments on different aspects of the round-trip engineering to verify the proposed approach.
+
+\begin{comment}
+\subsection{A complete generation solution for UML State Machine}
+\subsubsection{Context}
+The rise in use of the Model-Driven Engineering (MDE) approach promotes the automation in software development. 
+MDE relies on two paradigms, abstraction and automation \cite{Mussbacher2014}, which are recognized as very efficient for dealing with complexity. 
+The most useful advantage of MDE is to bring the ability to automatically generating code from diagram-based modeling languages such as USM to executable code.  
+The gap between the modeling world, which consists of software architects, who prefer using graphical languages such as USM, and the implementation world, which involves programmers, is therefore reduced. 
+
+However, on the one hand, OMG seeks to raise the usefulness of UML State Machine by providing more modeling concepts supporting software architects for modeling and designing complex systems. 
+On the other hand, the support of existing generation approaches, over the years of research and development, is still limited to simple cases, especially when considering concurrency of \ti{doActivity} and orthogonal regions, pseudo states such as history, and different events. 
+This again enlarges the gap between the UML State Machine semantics and the actual generated code.
+Specifically, the following lists some issues of current approaches:
+
+\begin{itemize}
+	\item Most of existing tools and approaches only focus on the sequential aspect while the concurrency such as the \ti{doActivity} behavior of states and orthogonal regions is not taken into account.
+	
+	\item The support for pseudo states such as history, choice and junction is poor while these are very helpful in modeling.
+	
+	\item Code generated from tools such as \cite{ibm_rhapsody} and [FXU] is heavily dependent on their own libraries, which makes the generated code not portable.
+	
+	\item Issues of event processing speed, executable file size, runtime memory consumption, and UML semantic-conformance of generation code. 
+\end{itemize}
+
+\subsubsection{Objective}
+In order for wider integrating MDE into software development today, one task, among other important tasks, is needed to seamlessly bring the theory specified by the UML specification and the Precise Semantics of UML Composite Structures (PSCS) \cite{OMG2015} into practice of complex software development with respect to the semantics as much as possible. 
+To do it, this paper presents a code generation approach whose objective is to clean the above issues. 
+
+We present a novel approach combining the IF-ELSE constructions of programming languages and the state pattern [XXX] with our support for concurrency. 
+Although supporting multi-thread-based concurrency, binary files compiled from and the event processing speed of runtime execution of code generated by our approach are smaller 20 and 30 [?] times, respectively, in comparison with to the boost library ==> should have compare with others.
+
+\subsection{On developing reactive systems: Diagram-based, text-based language or both?}
+\end{comment}
