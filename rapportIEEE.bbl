@@ -83,30 +83,9 @@ E.~J. Chikofsky, J.~H. Cross, and {others}, ``Reverse engineering and design
   recovery: {A} taxonomy,'' \emph{Software, IEEE}, vol.~7, no.~1, pp. 13--17,
   1990.
 
-\bibitem{sinelabore}
-\BIBentryALTinterwordspacing
-{SinelaboreRT}, ``{Sinelabore} {Manual},''
-  \url{http://www.sinelabore.com/lib/exe/fetch.php?media=wiki:downloads:sinelaborert.pdf}.
-  [Online]. Available:
-  \url{http://www.sinelabore.com/lib/exe/fetch.php?media=wiki:downloads:sinelaborert.pdf}
-\BIBentrySTDinterwordspacing
-
-\bibitem{EA}
-{SparxSystem}, ``{Enterprise Architect},''
-  \url{http://www.sparxsystems.com/products/ea/}, 2016.
-
-\bibitem{Rhapsody}
-IBM, ``"ibm rational rhapsody",''
-  \url{http://www.ibm.com/developerworks/downloads/r/rhapsodydeveloper/}, 2016,
-  [Online; accessed 14-Mar-2016].
-
-\bibitem{OMG2015}
-OMG, ``{Precise Semantics Of UML Composite Structures},'' no. October, 2015.
-
 \bibitem{omg_software_2008}
-------, ``Software \& {Systems} {Process} {Engineering} {Metamodel}
-  specification ({SPEM}) {Version} 2.0,'' http://www.omg.org/spec/SPEM/2.0/PDF,
-  2008.
+OMG, ``Software \& {Systems} {Process} {Engineering} {Metamodel} specification
+  ({SPEM}) {Version} 2.0,'' http://www.omg.org/spec/SPEM/2.0/PDF, 2008.
 
 \bibitem{Giese2006}
 H.~Giese and R.~Wagner, ``{Incremental Model Synchronization with Triple Graph
@@ -119,6 +98,12 @@ V.~Spinke, ``An object-oriented implementation of concurrent and hierarchical
   state machines,'' \emph{Information and Software Technology}, vol.~55,
   no.~10, pp. 1726--1740, Oct. 2013. [Online]. Available:
   \url{http://www.sciencedirect.com/science/article/pii/S0950584913000670}
+\BIBentrySTDinterwordspacing
+
+\bibitem{_papyrus/designer/code-generation_????}
+\BIBentryALTinterwordspacing
+``Papyrus/{Designer}/code-generation - {Eclipsepedia}.'' [Online]. Available:
+  \url{http://wiki.eclipse.org/Papyrus/Designer/code-generation}
 \BIBentrySTDinterwordspacing
 
 \bibitem{Niaz2004}
@@ -134,26 +119,71 @@ R.~Gronback, ``Eclipse {Modeling} {Project}.'' [Online]. Available:
   \url{http://www.eclipse.org/modeling/emf/}
 \BIBentrySTDinterwordspacing
 
+\bibitem{Aldrich:2002:ACS:581339.581365}
+\BIBentryALTinterwordspacing
+J.~Aldrich, C.~Chambers, and D.~Notkin, ``Archjava: Connecting software
+  architecture to implementation,'' in \emph{Proceedings of the 24th
+  International Conference on Software Engineering}, ser. ICSE '02.\hskip 1em
+  plus 0.5em minus 0.4em\relax New York, NY, USA: ACM, 2002, pp. 187--197.
+  [Online]. Available: \url{http://doi.acm.org/10.1145/581339.581365}
+\BIBentrySTDinterwordspacing
+
 \bibitem{moka}
 ``Moka {Model} {Execution},''
   \url{https://wiki.eclipse.org/Papyrus/UserGuide/ModelExecution}.
 
-\bibitem{Shalyto2006}
+\bibitem{niaz_mapping_2004}
 \BIBentryALTinterwordspacing
-A.~Shalyto and N.~Shamgunov, ``{State machine design pattern},'' \emph{Proc. of
-  the 4th International}, 2006. [Online]. Available:
-  \url{http://wscg.zcu.cz/rotor/net{\_}2006/papers{\_}2006/!proceedings{\_}short{\_}papers{\_}2006.pdf{\#}page=55}
+I.~A. Niaz, J.~Tanaka, and {others}, ``Mapping {UML} statecharts to java
+  code.'' in \emph{{IASTED} {Conf}. on {Software} {Engineering}}, 2004, pp.
+  111--116. [Online]. Available:
+  \url{http://www.actapress.com/PDFViewer.aspx?paperId=16433}
 \BIBentrySTDinterwordspacing
 
-\bibitem{Douglass1999}
-B.~P. Douglass, \emph{{Real-time UML : developing efficient objects for
-  embedded systems}}, 1999.
-
-\bibitem{Booch1998}
+\bibitem{sinelabore}
 \BIBentryALTinterwordspacing
-G.~Booch, J.~Rumbaugh, and I.~Jacobson, \emph{{The Unified Modeling Language
-  User Guide}}, 1998, vol.~3. [Online]. Available:
-  \url{http://portal.acm.org/citation.cfm?id=1088874}
+{SinelaboreRT}, ``{Sinelabore} {Manual},''
+  \url{http://www.sinelabore.com/lib/exe/fetch.php?media=wiki:downloads:sinelaborert.pdf}.
+  [Online]. Available:
+  \url{http://www.sinelabore.com/lib/exe/fetch.php?media=wiki:downloads:sinelaborert.pdf}
+\BIBentrySTDinterwordspacing
+
+\bibitem{Magicdraw}
+{No Magic, Inc.}, ``{Magic Draw},''
+  \url{https://www.nomagic.com/products/magicdraw.html}, 2016.
+
+\bibitem{EA}
+{SparxSystem}, ``{Enterprise Architect},''
+  \url{http://www.sparxsystems.com/products/ea/}, 2016.
+
+\bibitem{qm}
+QM, ``Qm,'' \url{http://www.state-machine.com/qm/}, 2016, [Online; accessed
+  14-May-2016].
+
+\bibitem{lavender1995active}
+R.~G. Lavender and D.~C. Schmidt, ``Active object,'' \emph{An Object Behavioral
+  Pattern for Concurrent}, 1995.
+
+\bibitem{statechart}
+B.~{Library}, ``{The} {Boost} {Statechart} {Library},''
+  \url{http://www.boost.org/doc/libs/1_61_0/libs/statechart/doc/index.html},
+  2016, [Online; accessed 04-July-2016].
+
+\bibitem{MSM}
+MSM, ``{Meta} {State} {Machine},''
+  \url{http://www.boost.org/doc/libs/1_59_0_b1/libs/msm/doc/HTML/index.html},
+  2016, [Online; accessed 04-July-2016].
+
+\bibitem{benchmark}
+\BIBentryALTinterwordspacing
+``{State} {Machine} {Benchmark}.'' [Online]. Available:
+  \url{http://boost-experimental.github.io/msm-lite/benchmarks/index.html}
+\BIBentrySTDinterwordspacing
+
+\bibitem{EUML}
+\BIBentryALTinterwordspacing
+``{State} {Machine} {Benchmark}.'' [Online]. Available:
+  \url{http://www.boost.org/doc/libs/1_61_0/libs/msm/doc/HTML/ch03s04.html}
 \BIBentrySTDinterwordspacing
 
 \end{thebibliography}

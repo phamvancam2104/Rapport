@@ -1,6 +1,6 @@
-\section{approach}
+\section{From UML State Machine to code and back}
 \label{sec:approach}
-This section presents our RTE approach. At first, it sketches USM concepts supported by this study. The outline and the detail of the approach are presented afterward.
+This section presents an approach, which allows to round-trip engineer model and code. At first, it sketches UML State Machine (USM) concepts supported by this study. The outline and the detail of the approach are presented afterward.
 \subsection{Scope}
 A USM describes the behavior of an active UML class which is called context class. A USM has a number of states and well-defined conditional transitions. A state is either an atomic state or a composite state that is composed of sub-states and has at most one active sub-state at a certain time. %, or a concurrent state which has several active sub-states at the same time. Only one of the inner states of the USM can be active at a time. 
 Transitions between states can be triggered by external or internal events. 
@@ -142,7 +142,10 @@ An event class associated with a \ti{CallEvent} inherits from a base event class
 The operation must be a member of the context class (a component as described above). 
 For example, a call event \ti{CallEventSend} associated with an operation named \ti{Send}, which has two input parameters typed by \ti{Integer}, is transformed into a class \ti{CallEventSend} having two attributes typed by \ti{Integer}. When a component receives an event, the event object is stored in an event queue.
 
-A signal event enters the component through a port typed by the signal. The implementation view of this scenario depends on the mapping of component-based to object-oriented concepts. In the following, we choose the mapping done in Papyrus Designer \cite{_papyrus/designer/code-generation_????}. In this mapping, the signal is transferred to the context class by an operation provided by the class at the associated port. Therefore, the transfer of a signal event becomes similar to that of \ti{CallEvent}. For example, a signal event containing a data \ti{SignalData} arrives at a port \ti{p} of a component \ti{C}. The transformation derives an interface \ti{SignalDataInterface} existing as the provided interface of \ti{p}. \ti{SignalDataInterface} has only one operation \ti{pushSignalData} whose body will be generated to push the event to the event queue of the component. Therefore, the processing of a \ti{SignalEvent} is the same as that of a \ti{CallEvent}. In the following sections, the paper only considers \ti{CallEvent} and \ti{TimeEvent}.
+A signal event occurs if a the component receives a signal through a port.
+The implementation view of this scenario depends on the mapping of component-based to object-oriented concepts. We choose the mapping done in Papyrus Designer \cite{_papyrus/designer/code-generation_????}. In this mapping, the signal is transferred to the context class by an operation provided by the interface of the component's port. 
+%Therefore, the transfer of a signal event becomes similar to that of \ti{CallEvent}. 
+For example, a signal event containing a data \ti{SignalData} arrives at a port \ti{p} of a component \ti{C}. The transformation derives an interface \ti{SignalDataInterface} existing as the provided interface of \ti{p}. \ti{SignalDataInterface} has only one operation \ti{pushSignalData} whose body will be generated to push a signal event to the event queue of the component. %Therefore, the processing of a \ti{SignalEvent} is the same as that of a \ti{CallEvent}. In the following sections, the paper only considers \ti{CallEvent} and \ti{TimeEvent}.
 
 A \ti{TimeEvent} is considered as an internal event. The source state class of a transition triggered by a \ti{TimeEvent} executes a thread to check the expiration of the event duration as in \cite{Niaz2004} and puts the time event in the event queue of the context class. 
 
@@ -381,8 +384,4 @@ If an intermediate model is not present, a new intermediate model and a new USM 
 
   
 For example, assuming that we need to adjust the USM example shown in Fig. \ref{fig:statemachuine} by adding a guard to the transition from \ti{Operating} to the final state. The adjustment can be done by either modifying the USM model or the generated code. In case of modifying code, the associated transition function in Listing \ref{lst:code-segment} is edited by inserting an \ti{if} statement which calls the guard method implemented in the context class. The change detection algorithm adds the transition function into the updated list since it finds that the source state, the target state and the event name of the transition is not changed. By using mapping information in the mapping table, the original transition in the USM is retrieved. The guard of the original transition is also created. 	
-
-
-
-
 

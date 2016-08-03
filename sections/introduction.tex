@@ -41,7 +41,7 @@ of abstraction, tend to favor the use of models, and therefore
 prefer graphical languages for describing the architecture of
 the system (see Fig. \ref{fig:inconsistency}).
 
-The survey described in \cite{hutchinson_model-driven_2014} polled stakeholders in companies
+The survey described in \cite{hutchinson_model-driven_2014,Forward2008} polled stakeholders in companies
 who use MDE approaches. 
 The survey reveals that UML is the prominent and dominating language. 
 85\% of the respondents used UML for various purposes, especially problem understanding and automation such as code generation (88,2\%). 
@@ -52,9 +52,9 @@ the respondents answered that they spend a lot of time and effort synchronizing
 model and code. The need of synchronization is critically required by systems today. 
 Besides the synchronization aspect, efficiency of code generated from models is a concern for the respondents. 
 
-Yet, still in another survey \cite{Forward2008}, the authors compare code-centric and model-centric approaches by asking the participants, who mostly come from Canada, United States and other countries such as United Kingdom, France, Indian, Australia and Singapore, questions related to different activities in software development such as fixing a bug, creating efficient software and a system as quickly as possible. 
-The results shows that most activities tend to be easier in a model-centric approach but many participants believe that a code-centric approach is much easier a model-centric approach.
-This confirms the importance of automatically keeping model and code synchronized.
+%Yet, still in another survey \cite{Forward2008}, the authors compare code-centric and model-centric approaches by asking the participants, who mostly come from Canada, United States and other countries such as United Kingdom, France, Indian, Australia and Singapore, questions related to different activities in software development such as fixing a bug, creating efficient software and a system as quickly as possible. 
+%The results shows that most activities tend to be easier in a model-centric approach but many participants believe that a code-centric approach is much easier a model-centric approach.
+%This confirms the importance of automatically keeping model and code synchronized.
       
 
 The code modified by programmers and the model are then inconsistent. 
@@ -79,6 +79,14 @@ different categories of developers (e.g. architects, programmers),
 who use different development practices.
 %The solution must not impose a choice between a diagram-based language and a textual language.
 
+
+\begin{figure}
+	\centering
+	\includegraphics[trim={4.5cm 6.6cm 5cm 3cm},clip, width=0.8\columnwidth]{figures/inconsistency}
+	\caption{Concurrent modifications made to different artifacts}
+	\label{fig:inconsistency}
+\end{figure}
+
 Collaboration between developers producing different types of artifacts, in different languages,
 using different tools,
 raises the issue of artifact synchronization.
@@ -89,27 +97,64 @@ It is related to traditional software engineering disciplines
 such as forward
 and reverse engineering \cite{chikofsky_reverse_1990}.
 
-\begin{figure}
-	\centering
-	\includegraphics[trim={4.5cm 6.6cm 5cm 3cm},clip, width=0.8\columnwidth]{figures/inconsistency}
-	\caption{Concurrent modifications made to different artifacts}
-	\label{fig:inconsistency}
-\end{figure}
+
 
 Usually, a direct synchronizing between the architecture model and the code is hard because of the large abstraction gap. The synchronization is therefore decoupled into several synchronization steps of artifacts participating in one of the transformation phases of the chain. Hence, the whole synchronization is achieved if these steps do. 
 
-To sum up, the thesis can be divided into two related major parts as followings:
+\subsection{Research method}
+The research is realized by an iterative method depicted in Fig. \ref{fig:researchmethod}.
+We started by studying the literature related to MDE and approaches to integrating MDE into industrial practice. 
+We are interested in approaches for developing embedded systems using synchronization of model and generated code, which is critical as previously discussed.
+Specifically, we found that, (1) current approaches and tools do not support synchronization of concurrent modifications made to model and code. Furthermore, (2) the synchronization is, for UML community, only supported for available concepts of UML class diagrams while the behavior model such as UML State Machine (USM) is not supported.
+The reason is that there is no trivial mapping between mainstream programming languages such as C++ and Java, and the behavior model.
+
+However, USM plays an important role in modeling and designing reactive, real-time, embedded systems.
+Hence, the lack of synchronization support for USMs harms enterprises to adopt UML as a development language.
+%It is how our motivation is established.
+
+
+It is common in MDE that code is generated, from either USMs or component models, by using templates.
+When models or templates change, code needs to be changed accordingly.
+However, when these artifacts are concurrently modified, for some reasons, making these consistent again are challenging. 
+Some approaches using specialized comments such as \ti{@generated} and \ti{@non generated} to specify which code areas should be untouched or modified, respectively.
+By this way, when model elements and code change, code areas (user-modified code) marked by \ti{@non generated} are preserved. 
+It means that changes made to models or templates are not propagated to some code areas. 
+This may lead to the dead code problem, in which the user-modified code is not used in the new generated code (see \ref{subsec:sync-template} for more details).
+Hence, we realize (3) the problem of models, code, and template co-evolution, which is not solved by existing approaches.
+
+Once these related problems are identified, we then focus on defining and resolving the problems by proposing different approaches, whose goal to gain the acceptance of MDE by the enterprises.
+The development and evaluation of the solutions are then conducted.
+We iteratively evaluate by going to results of evaluation, compare with other approaches, and check whether the solutions can be improved to get better results.
+%Once
+
+\begin{figure}[b]
+	\centering
+	\includegraphics[trim={1.0cm 0.2cm 2.0cm 7.3cm},clip, width=1.04\columnwidth]{figures/researchmethod}
+	\caption{Research method}
+	\label{fig:researchmethod}
+\end{figure}
+
 \subsection{Major topics}
 \label{subsec:majors}
+To sum up, the thesis can be divided into two related major parts as followings:
 \begin{itemize}
 	\item \tb{Artifact synchronization}: As previously discussed, this is critical for step-by-step integrating MDE into current software development practices and collaborating these with MDE methodologies. Particularly, synchronization of artifacts is realized by means of incremental model-to-model and model-to-text transformations. Architecture models are often at a higher level abstraction than low level implementation code. Mappings from the architecture are usually not one-to-one. This raises the difficulty in mapping code-side elements back to architecture model-side elements. The existing synchronizations (state of the art) mainly focus on static parts while the dynamics are missing.
 	
-	\item \tb{Improving code generation solutions and towards synchronization for UML State Machine}: UML State Machines are widely used for reactive, real-time and embedded systems. However, on the one hand, the OMG seeks to raise the usefulness of UML State Machine by providing more modeling concepts supporting software architects for modeling and designing complex systems. 
-	On the other hand, the support of existing generation approaches, over the years of research and development, is still limited to simple cases, especially when considering concurrency of \ti{doActivity} and orthogonal regions, pseudo states such as history, and different events, e.g. Rhapsody does not support \ti{doActivity}, junction or truly concurrent execution orthogonal regions\footnote{IBM Rhapsody and UML differences, \url{http://www-01.ibm.com/support/docview.wss?uid=swg27040251}} or Sinelabore \cite{sinelabore} restricts choice and junction, and does not support fork, join, terminate, junction and concurrent states. Tools such as Enterprise Architect \cite{EA}, Rhapsody \cite{Rhapsody} only support CallEvent and TimeEvent while SignalEvent and ChangeEvent (see \ref{subsec:background} for formal definitions) are missing. 
-	This again enlarges the gap between the UML State Machine semantics and the actual generated code. 
-	Furthermore, the synchronization between UML State Machine and generated code is not supported by any other approaches, even though it is critical.  	 
+	\item \tb{Improving code generation solutions and towards synchronization for UML State Machine}: UML State Machines are widely used for reactive, real-time and embedded systems. However, the synchronization between UML State Machine and generated code is not supported by any existing approaches, even though it is critical. 
+	Furthermore, on the one hand, the OMG seeks to raise the usefulness of UML State Machine by providing more modeling concepts supporting software architects for modeling and designing complex systems. 
+	On the other hand, the support of existing generation approaches, over the years of research and development, is still limited to simple cases, especially when considering concurrency, pseudo state and event support. 
+	
+	\item \tb{Co-evolution of models, code, and generation templates}.  
+	
+	%\item \tb{Model-code co-debugging (MCCD)}:	Debugging is one of the most important activities in software development to find and fix bugs. 
+	%In MDE, when having bugs in generated code, it is difficult to locate the code statements or the model elements, which have the bugs. 
+	%MCCD enables modelers/developers to set breakpoints on model elements/code statements, respectively, and the breakpoints are also set on the associated code elements/model elements.
+	%Thus, MCCD helps seamlessly collaborate model and code in debugging.
+	%Current tools and approaches \cite{moka} support the model execution and debugging, especially for UML Activity and State Machine Diagrams, using Java/fUML as underlying action language.
+	%However, model-code co-debugging 	 
 \end{itemize}
 
+\begin{comment}
 In reality, UML State Machine might be used for different use-cases, either with RTE or not. 
 We consider the second topic in different use-cases. Fig. \ref{fig:smapproaches} shows three cases. 
 There are trade-offs between these. In the use-case (a), code generators can generate efficient code from state machines with full features (this is detailed in this report).
@@ -123,7 +168,7 @@ The case (c) is a harmonization of the other two but restricts developers to a d
 	\label{fig:smapproaches}
 \end{figure}
 
-\begin{comment}
+
 \subsection{Problem statement}
 \begin{itemize}
 	\item Architecture models are often at higher level abstraction than low level implementation code. Mappings from the architecture are usually not one-to-one. This raises the difficulty in mapping code-side elements back to architecture model-side elements. The existing synchronizations mainly focus on static parts while the dynamics are missing.
@@ -138,21 +183,28 @@ The transformation from architecture models to code directly involves chaining m
 	\item A generic methodology, which synchronizes two different system artifacts (model and code). This method is based on incremental model transformation and synchronization. It will be used in different specific synchronization cases developed in the thesis deployment.
 	
 	\item A specific synchronization between UML State Machine with full features and code. %This will gain the usage of MDE in software development today. 
-	Therefore, one task is needed to seamlessly make the behavior of the code generated from UML State Machine complied with the semantics specified by the Precise Semantics of UML State Machine (PSSM) \cite{OMG2015}. 
-	To do it, the objective of this part is to provide a complete generation solution, especially considering the concurrency support for real-time systems. From the generation solution, a specific synchronization methodology combined with the generic one as above is also desired.     
+	Therefore, one task is needed to 
+	%seamlessly make the behavior of the code generated from UML State Machine complied with the semantics specified by the Precise Semantics of UML State Machine (PSSM) \cite{OMG2015}. 
+	%To do it, the objective of this part is to 
+	provide a complete generation solution, especially considering the concurrency support for real-time systems. From the generation solution, a specific synchronization methodology combined with the generic one as above is also desired.  
+	
+	\item Synchronization of and making concurrently modified models, code, and templates consistent again.    
 \end{itemize}
+
+The final goal is to provide a common framework with many facilities for collaborating MDE developers and programmers so effectively that the acceptance of MDE in practice can be gained.
 
 \subsection{Contributions}
 The contributions of this report are the followings:
 \begin{itemize}	
 	\item An extensible generic methodology, which synchronize two different system artifacts (model and code). 
 	
-	\item A complete generation solution from UML State Machine to code with respect to the Precise Semantics State Machine (PSSM). 
+	%\item A complete generation solution from UML State Machine to code with respect to the Precise Semantics State Machine (PSSM). 
 	
-	\item A specific methodology derived from the generic one supporting the synchronization of UML State Machine and code. 
+	\item A specific methodology for the synchronization of UML State Machine and code. 
 	
-	\item A method for synchronization based on incremental model transformations, which prevent one artifact from begin overwritten when propagating changes from the other artifact.
+	%\item A method for synchronization based on incremental model transformations, which prevent one artifact from begin overwritten when propagating changes from the other artifact.
 	
+	\item Brief presentation of ongoing works around model-code synchronization which are not detailed in this report.
 	   
 \end{itemize}
 
@@ -172,7 +224,7 @@ In order to synchronize different artifacts of systems, MDE researchers introduc
 \end{comment}
 
 \subsection{Structure of the report}
-The remaining of this report is structured as followings: Section \ref{sec:processes} presents a generic pattern for artifact synchronization in case of concurrent modifications made to model and code. Section \ref{sec:codegen} describes a complete code generation solution from UML State Machine with respect to concurrency semantics. Section \ref{sec:ongoing-future} presents some ongoing works including a specific synchronization of UML State Machine and code, which is derived from the generic pattern and the approach as in Fig. \ref{fig:smapproaches} (c), and a verification of semantic-conformance of generated code runtime execution. Section \ref{sec:other} sketches other works which are not detailed in this report.
+The remaining of this report is structured as followings: Section \ref{sec:processes} presents a generic pattern for artifact synchronization in case of concurrent modifications made to model and code. Section \ref{sec:approach} describes a round-trip engineering from UML State Machine (a subset) to code and back. Section \ref{sec:ongoing-future} presents some ongoing works including an approach for round-trip engineering from USMs with full features and C++ code for reactive systems, an approach for co-evolution of concurrently modified models, code, and templates, and a verification of semantic-conformance of generated code runtime execution. Section \ref{sec:other} sketches other works which are not detailed in this report.
 
 \begin{comment}
 \subsection{Decoupling of the synchronization of artifacts}

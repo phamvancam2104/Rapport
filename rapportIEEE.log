@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2015.9.1)  11 JUL 2016 16:17
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2015.9.1)  3 AUG 2016 14:27
 entering extended mode
 **rapportIEEE.tex
 (rapportIEEE.tex
@@ -1144,7 +1144,7 @@ LaTeX Font Info:    Font shape `T1/ptm/bx/it' in size <24> not available
 File: figures/inconsistency.pdf Graphic file (type pdf)
 
 <use figures/inconsistency.pdf>
-Package pdftex.def Info: figures/inconsistency.pdf used on input line 94.
+Package pdftex.def Info: figures/inconsistency.pdf used on input line 85.
 (pdftex.def)             Requested size: 201.60077pt x 78.18196pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -1152,32 +1152,30 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
  [1{C:/Users/VP242103/Downloads/pdftex/config/pdftex.map}
 
 
-]
-LaTeX Font Info:    Try loading font information for U+msa on input line 105.
+ <./figures/inconsistency.pdf>]
+<figures/researchmethod.pdf, id=29, 963.6pt x 542.025pt>
+File: figures/researchmethod.pdf Graphic file (type pdf)
 
+<use figures/researchmethod.pdf>
+Package pdftex.def Info: figures/researchmethod.pdf used on input line 132.
+(pdftex.def)             Requested size: 262.07831pt x 98.06805pt.
+
+Overfull \hbox (10.07831pt too wide) in paragraph at lines 132--133
+ [][] 
+ []
+
+LaTeX Font Info:    Try loading font information for U+msa on input line 141.
 (C:\Users\VP242103\Downloads\tex\latex\amsfonts\umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 105.
+LaTeX Font Info:    Try loading font information for U+msb on input line 141.
 
 (C:\Users\VP242103\Downloads\tex\latex\amsfonts\umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
+Underfull \vbox (badness 1019) has occurred while \output is active []
 
-LaTeX Warning: Reference `subsec:background' on page 2 undefined on input line 
-108.
-
-<figures/smapproaches.pdf, id=11, 963.6pt x 542.025pt>
-File: figures/smapproaches.pdf Graphic file (type pdf)
-
-<use figures/smapproaches.pdf>
-Package pdftex.def Info: figures/smapproaches.pdf used on input line 121.
-(pdftex.def)             Requested size: 201.60077pt x 80.68056pt.
- [2 <./figures/inconsistency.pdf> <./figures/smapproaches.pdf>]
-
-LaTeX Warning: Reference `sec:codegen' on page 3 undefined on input line 175.
-
-) (sections/processes.tex
+ [2 <./figures/researchmethod.pdf>]) (sections/processes.tex
 LaTeX Font Info:    Try loading font information for T1+pcr on input line 73.
 
 (C:\Users\VP242103\Downloads\tex\latex\psnfss\t1pcr.fd
@@ -1192,8 +1190,11 @@ File: figures/scenario3_seq.pdf Graphic file (type pdf)
 <use figures/scenario3_seq.pdf>
 Package pdftex.def Info: figures/scenario3_seq.pdf used on input line 177.
 (pdftex.def)             Requested size: 252.0pt x 162.01932pt.
-) (sections/approach.tex [4 <./figures/scenario3_seq.pdf>] <figures/flowchart.p
-df, id=1518, 963.6pt x 542.025pt>
+) (sections/approach.tex
+Underfull \vbox (badness 1092) has occurred while \output is active []
+
+ [4 <./figures/scenario3_seq.pdf>] <figures/flowchart.pdf, id=1518, 963.6pt x 5
+42.025pt>
 File: figures/flowchart.pdf Graphic file (type pdf)
 
 <use figures/flowchart.pdf>
@@ -1224,62 +1225,91 @@ File: omsptm.fd
 LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <8> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 54.
  [5 <./figures/flowchart.pdf> <./figures/statemachine.pdf>]
-
-LaTeX Warning: Citation `_papyrus/designer/code-generation_????' on page 6 unde
-fined on input line 145.
-
-
-Underfull \vbox (badness 1888) has occurred while \output is active []
-
-
 <figures/details2.pdf, id=1596, 963.6pt x 542.025pt>
 File: figures/details2.pdf Graphic file (type pdf)
 
 <use figures/details2.pdf>
-Package pdftex.def Info: figures/details2.pdf used on input line 192.
+Package pdftex.def Info: figures/details2.pdf used on input line 195.
 (pdftex.def)             Requested size: 201.60077pt x 78.4213pt.
-
-<figures/bkwmapping.pdf, id=1598, 963.6pt x 542.025pt>
+ [6 <./figures/details2.pdf>]
+<figures/bkwmapping.pdf, id=1668, 963.6pt x 542.025pt>
 File: figures/bkwmapping.pdf Graphic file (type pdf)
 
 <use figures/bkwmapping.pdf>
-Package pdftex.def Info: figures/bkwmapping.pdf used on input line 205.
+Package pdftex.def Info: figures/bkwmapping.pdf used on input line 208.
 (pdftex.def)             Requested size: 453.60077pt x 146.8265pt.
- [6 <./figures/details2.pdf>]
+
 
 LaTeX Warning: No positions in optional float specifier.
-               Default added (so using `tbp') on input line 219.
+               Default added (so using `tbp') on input line 222.
 
 
-Overfull \hbox (7.33174pt too wide) in paragraph at lines 223--267
+Overfull \hbox (7.33174pt too wide) in paragraph at lines 226--270
  [][] 
  []
 
 
 LaTeX Warning: No positions in optional float specifier.
-               Default added (so using `htbp') on input line 327.
+               Default added (so using `htbp') on input line 330.
 
 <figures/asttransition.pdf, id=1670, 399.894pt x 105.996pt>
 File: figures/asttransition.pdf Graphic file (type pdf)
 
 <use figures/asttransition.pdf>
-Package pdftex.def Info: figures/asttransition.pdf used on input line 372.
+Package pdftex.def Info: figures/asttransition.pdf used on input line 375.
 (pdftex.def)             Requested size: 252.0pt x 45.27818pt.
-) (sections/ongoing1.tex [7 <./figures/bkwmapping.pdf> <./figures/asttransition
-.pdf>]
+) (sections/ongoing1.tex
+<figures/sm-sync.pdf, id=1672, 963.6pt x 542.025pt>
+File: figures/sm-sync.pdf Graphic file (type pdf)
+ <use figures/sm-sync.pdf>
+Package pdftex.def Info: figures/sm-sync.pdf used on input line 31.
+(pdftex.def)             Requested size: 516.0pt x 201.8824pt.
 
-LaTeX Warning: Reference `sec:codegen' on page 8 undefined on input line 21.
+[7] <figures/frontend.pdf, id=1680, 963.6pt x 542.025pt>
+File: figures/frontend.pdf Graphic file (type pdf)
 
-[8] <figures/semanticconformance.pdf, id=1912, 963.6pt x 542.025pt>
+<use figures/frontend.pdf>
+Package pdftex.def Info: figures/frontend.pdf used on input line 48.
+(pdftex.def)             Requested size: 252.0pt x 60.49637pt.
+
+Underfull \vbox (badness 1701) has occurred while \output is active []
+
+ [8 <./figures/bkwmapping.pdf> <./figures/asttransition.pdf>]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+
+LaTeX Warning: Reference `fig:example-modified' on page 9 undefined on input li
+ne 138.
+
+
+LaTeX Warning: Reference `fig:example-modified' on page 9 undefined on input li
+ne 140.
+
+<figures/example.pdf, id=1915, 963.6pt x 542.025pt>
+File: figures/example.pdf Graphic file (type pdf)
+ <use figures/example.pdf>
+Package pdftex.def Info: figures/example.pdf used on input line 149.
+(pdftex.def)             Requested size: 516.0pt x 174.05547pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [9 <./figures/sm-sync.pdf> <./figures/frontend.pdf>]
+<figures/semanticconformance.pdf, id=1955, 963.6pt x 542.025pt>
 File: figures/semanticconformance.pdf Graphic file (type pdf)
 
 <use figures/semanticconformance.pdf>
-Package pdftex.def Info: figures/semanticconformance.pdf used on input line 46.
-
+Package pdftex.def Info: figures/semanticconformance.pdf used on input line 209
+.
 (pdftex.def)             Requested size: 252.0pt x 59.10774pt.
 ) (sections/ongoing.tex
-Underfull \hbox (badness 1590) in paragraph at lines 5--5
+Underfull \hbox (badness 1590) in paragraph at lines 6--6
  \T1/ptm/m/it/10 A. A rule ex-e-cu-tion scheduling-based in-cre-men-tal model
+ []
+
+[10 <./figures/example.pdf> <./figures/semanticconformance.pdf>]
+Underfull \hbox (badness 1968) in paragraph at lines 59--60
+\T1/ptm/m/n/10 run-time mem-ory con-sump-tion, and UML semantic-
  []
 
 ) (sections/conclusion.tex) (rapportIEEE.bbl
@@ -1287,45 +1317,25 @@ Underfull \hbox (badness 1590) in paragraph at lines 5--5
 Package balance Warning: You have called \balance in second column
 (balance)                Columns might not be balanced.
 
-[9 <./figures/semanticconformance.pdf>]
-Underfull \hbox (badness 2027) in paragraph at lines 88--93
+[11]
+Underfull \hbox (badness 2027) in paragraph at lines 145--150
 []\T1/ptm/m/n/8 SinelaboreRT, ``Sinela-bore Man-ual,'' $http : / / www . sinela
 bore .$
  []
 
 
-Underfull \hbox (badness 1910) in paragraph at lines 88--93
+Underfull \hbox (badness 1910) in paragraph at lines 145--150
 $\T1/ptm/m/n/8 com / lib / exe / fetch . php ? media = wiki : downloads : sinel
 aborert . pdf$. [On-
  []
 
 
-Underfull \hbox (badness 3058) in paragraph at lines 95--97
+Underfull \hbox (badness 3058) in paragraph at lines 156--158
 []\T1/ptm/m/n/8 SparxSystem, ``En-ter-prise Ar-chi-tect,'' $http : / / www . sp
 arxsystems . com /$
  []
 
-) (sections/appendix.tex <figures/ATM.pdf, id=1969, 513.92pt x 311.1625pt>
-File: figures/ATM.pdf Graphic file (type pdf)
-
-<use figures/ATM.pdf>
-Package pdftex.def Info: figures/ATM.pdf used on input line 6.
-(pdftex.def)             Requested size: 252.0pt x 150.325pt.
-
-Overfull \vbox (10.31334pt too high) has occurred while \output is active []
-
-
-[10 <./figures/ATM.pdf>]
-
-LaTeX Warning: Reference `fig:entering' on page 11 undefined on input line 80.
-
-) (sections/cv.tex
-Overfull \vbox (1.41496pt too high) has occurred while \output is active []
-
-
-[11] [12
-
-])
+)
 
 ** Conference Paper **
 Before submitting the final camera ready copy, remember to:
@@ -1337,35 +1347,31 @@ Before submitting the final camera ready copy, remember to:
  uses only Type 1 fonts and that every step in the generation
  process uses the appropriate paper size.
 
-[13] (rapportIEEE.aux)
+[12] (rapportIEEE.aux)
 
 LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 28491 strings out of 493673
- 558077 string characters out of 3144029
- 1201645 words of memory out of 3000000
- 31357 multiletter control sequences out of 15000+200000
- 121496 words of font info for 132 fonts, out of 3000000 for 9000
+ 27897 strings out of 493673
+ 551161 string characters out of 3144029
+ 900919 words of memory out of 3000000
+ 30768 multiletter control sequences out of 15000+200000
+ 120400 words of font info for 131 fonts, out of 3000000 for 9000
  1025 hyphenation exceptions out of 8191
- 54i,16n,85p,10424b,2082s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 54i,16n,85p,10424b,1467s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/Users/VP242103/Downloads/fonts/enc/dvips/fontname/8r.enc}<C:/Users/VP2421
 03/Downloads/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/VP242103/Downl
 oads/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Users/VP242103/Downloads/font
-s/type1/public/amsfonts/cm/cmmi8.pfb><C:/Users/VP242103/Downloads/fonts/type1/p
-ublic/amsfonts/cm/cmr10.pfb><C:/Users/VP242103/Downloads/fonts/type1/public/ams
-fonts/cm/cmr7.pfb><C:/Users/VP242103/Downloads/fonts/type1/public/amsfonts/cm/c
-mr8.pfb><C:/Users/VP242103/Downloads/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
-<C:/Users/VP242103/Downloads/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Users
-/VP242103/Downloads/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Users/VP242103
-/Downloads/fonts/type1/urw/courier/ucrr8a.pfb><C:/Users/VP242103/Downloads/font
-s/type1/urw/times/utmb8a.pfb><C:/Users/VP242103/Downloads/fonts/type1/urw/times
-/utmbi8a.pfb><C:/Users/VP242103/Downloads/fonts/type1/urw/times/utmr8a.pfb><C:/
-Users/VP242103/Downloads/fonts/type1/urw/times/utmri8a.pfb>
-Output written on rapportIEEE.pdf (13 pages, 1292961 bytes).
+s/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/VP242103/Downloads/fonts/type1/pu
+blic/amsfonts/cm/cmsy7.pfb><C:/Users/VP242103/Downloads/fonts/type1/public/amsf
+onts/cm/cmsy8.pfb><C:/Users/VP242103/Downloads/fonts/type1/urw/courier/ucrr8a.p
+fb><C:/Users/VP242103/Downloads/fonts/type1/urw/times/utmb8a.pfb><C:/Users/VP24
+2103/Downloads/fonts/type1/urw/times/utmr8a.pfb><C:/Users/VP242103/Downloads/fo
+nts/type1/urw/times/utmri8a.pfb>
+Output written on rapportIEEE.pdf (12 pages, 1613267 bytes).
 PDF statistics:
- 2035 PDF objects out of 2073 (max. 8388607)
+ 2067 PDF objects out of 2073 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 117 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 139 words of extra memory for PDF output out of 10000 (max. 10000000)
 
